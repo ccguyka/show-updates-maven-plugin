@@ -5,3 +5,43 @@
 # Show Maven Updates Plugin
 
 Show the latest update version of maven dependencies.
+
+# Usage
+
+How to build it
+
+```
+mvn install
+```
+
+Also build help mojo
+
+```
+mvn install org.apache.maven.plugins:maven-plugin-plugin:helpmojo
+```
+
+How to use it
+
+```
+mvn com.github.ccguyka:show-updates-maven-plugin:updates
+```
+
+Show help
+
+```
+mvn com.github.ccguyka:show-updates-maven-plugin:help
+```
+
+which will print
+
+```
+This plugin has 2 goals:
+
+show-updates:help
+  Display help information on show-updates-maven-plugin.
+  Call mvn show-updates:help -Ddetail=true -Dgoal=<goal-name> to display
+  parameter details.
+
+show-updates:updates
+  Shows all dependencies and parent updates.
+```
