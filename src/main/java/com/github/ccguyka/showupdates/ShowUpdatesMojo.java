@@ -31,7 +31,7 @@ import com.github.ccguyka.showupdates.source.UpdateSource;
 @Mojo(name = "updates")
 public class ShowUpdatesMojo extends AbstractMojo {
 
-    @Component
+    @Parameter( defaultValue = "${session}", readonly = true )
     protected MavenSession mavenSession;
 
     @Component
