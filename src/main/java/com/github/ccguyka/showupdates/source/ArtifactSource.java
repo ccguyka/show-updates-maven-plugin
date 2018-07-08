@@ -16,12 +16,14 @@ public class ArtifactSource {
     }
 
     public List<Artifact> getArtifacts(final List<Dependency> dependencies) {
+
         final List<Artifact> artifacts = new ArrayList<>();
-        for (final Dependency dependency : dependencies) {
-            artifacts.add(artifactFactory.createArtifact(dependency.getGroupId(), dependency.getArtifactId(),
-                    dependency.getVersion(), dependency.getScope(), dependency.getType()));
-        }
+        dependencies.stream().forEach(dependency -> artifacts.add(createArtifactFrom(dependency)));
         return artifacts;
     }
 
+    private Artifact createArtifactFrom(final Dependency dependency) {
+        return artifactFactory.createArtifact(dependency.getGroupId(), dependency.getArtifactId(),
+                dependency.getVersion(), dependency.getScope(), dependency.getType());
+    }
 }
