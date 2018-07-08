@@ -70,7 +70,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
         final Artifact parent = project.getParentArtifact();
         if (parent != null) {
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
-                    localRepository, remoteArtifactRepositories).getUpdate(parent);
+                    localRepository, remoteArtifactRepositories, getLog()).getUpdate(parent);
 
             return Optional.of(new FilterLatestUpdates().getLatestUpdates(updates));
         }
@@ -85,7 +85,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
             final List<Artifact> artifacts = new ArtifactSource(artifactFactory).getArtifacts(filterDependencies);
 
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
-                    localRepository, remoteArtifactRepositories).getUpdates(artifacts);
+                    localRepository, remoteArtifactRepositories, getLog()).getUpdates(artifacts);
 
             return Optional.of(new FilterLatestUpdates().getLatestUpdates(updates));
         }
@@ -98,7 +98,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
         if (artifacts != null && !artifacts.isEmpty()) {
             final Set<Artifact> filterArtifacts = filterArtifacts(artifacts);
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
-                    localRepository, remoteArtifactRepositories).getUpdates(filterArtifacts);
+                    localRepository, remoteArtifactRepositories, getLog()).getUpdates(filterArtifacts);
 
             return Optional.of(new FilterLatestUpdates().getLatestUpdates(updates));
         }
@@ -118,7 +118,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
             final List<Artifact> artifacts = new ArtifactSource(artifactFactory).getArtifacts(filterDependencies);
 
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
-                    localRepository, remoteArtifactRepositories).getUpdates(artifacts);
+                    localRepository, remoteArtifactRepositories, getLog()).getUpdates(artifacts);
 
             return Optional.of(new FilterLatestUpdates().getLatestUpdates(updates));
         }
