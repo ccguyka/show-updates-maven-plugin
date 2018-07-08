@@ -1,9 +1,13 @@
 package com.github.ccguyka.showupdates;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
@@ -77,7 +81,8 @@ public class ShowUpdatesMojo extends AbstractMojo {
     private Optional<Map<Artifact, ArtifactVersion>> getDependencyUpdates() {
         final List<Dependency> dependencies = project.getDependencies();
         if (dependencies != null && !dependencies.isEmpty()) {
-            final List<Artifact> artifacts = new ArtifactSource(artifactFactory).getArtifacts(dependencies);
+            final List<Dependency> filterDependencies = filterDependencies(dependencies);
+            final List<Artifact> artifacts = new ArtifactSource(artifactFactory).getArtifacts(filterDependencies);
 
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
                     localRepository, remoteArtifactRepositories).getUpdates(artifacts);
@@ -91,8 +96,9 @@ public class ShowUpdatesMojo extends AbstractMojo {
     private Optional<Map<Artifact, ArtifactVersion>> getPluginUpdates() {
         final Set<Artifact> artifacts = project.getPluginArtifacts();
         if (artifacts != null && !artifacts.isEmpty()) {
+            final Set<Artifact> filterArtifacts = filterArtifacts(artifacts);
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
-                    localRepository, remoteArtifactRepositories).getUpdates(artifacts);
+                    localRepository, remoteArtifactRepositories).getUpdates(filterArtifacts);
 
             return Optional.of(new FilterLatestUpdates().getLatestUpdates(updates));
         }
@@ -108,7 +114,8 @@ public class ShowUpdatesMojo extends AbstractMojo {
 
         final List<Dependency> dependencies = dependencyManagement.getDependencies();
         if (dependencies != null && !dependencies.isEmpty()) {
-            final List<Artifact> artifacts = new ArtifactSource(artifactFactory).getArtifacts(dependencies);
+            final List<Dependency> filterDependencies = filterDependencies(dependencies);
+            final List<Artifact> artifacts = new ArtifactSource(artifactFactory).getArtifacts(filterDependencies);
 
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
                     localRepository, remoteArtifactRepositories).getUpdates(artifacts);
@@ -119,4 +126,25 @@ public class ShowUpdatesMojo extends AbstractMojo {
         return Optional.empty();
     }
 
+    private List<Dependency> filterDependencies(final List<Dependency> dependencies) {
+        try {
+            final String content = new String(Files.readAllBytes(Paths.get(project.getFile().getAbsolutePath())));
+            return dependencies.stream().filter(dependency -> content.contains(dependency.getArtifactId()))
+                    .collect(Collectors.toList());
+        } catch (final IOException e) {
+            getLog().warn("Not able to read pom.xml file");
+            return dependencies;
+        }
+    }
+
+    private Set<Artifact> filterArtifacts(final Set<Artifact> artifacts) {
+        try {
+            final String content = new String(Files.readAllBytes(Paths.get(project.getFile().getAbsolutePath())));
+            return artifacts.stream().filter(artifact -> content.contains(artifact.getArtifactId()))
+                    .collect(Collectors.toSet());
+        } catch (final IOException e) {
+            getLog().warn("Not able to read pom.xml file");
+            return artifacts;
+        }
+    }
 }
