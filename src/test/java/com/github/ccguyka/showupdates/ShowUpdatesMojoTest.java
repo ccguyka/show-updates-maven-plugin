@@ -64,8 +64,9 @@ public class ShowUpdatesMojoTest extends AbstractMojoTestCase {
         when(project.getParentArtifact()).thenReturn(artifact);
         final List<ArtifactVersion> updates = new ArrayList<>();
         updates.add(new DefaultArtifactVersion("1.2.4"));
+        updates.add(new DefaultArtifactVersion("1.3-SNAPSHOT"));
         when(artifactMetadataSource
-                .retrieveAvailableVersions(artifact, localRepository, remoteArtifactRepositories)).thenReturn(updates );
+                .retrieveAvailableVersions(artifact, localRepository, remoteArtifactRepositories)).thenReturn(updates);
 
         mojo.execute();
 
