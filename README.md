@@ -9,14 +9,20 @@ Show the latest update version of maven dependencies.
 
 # Usage
 
-How to build it
+## How to build it
 
 ```
 mvn install
 ```
 
-How to use it
+## How to use it
 
 ```
 mvn com.github.ccguyka:show-updates-maven-plugin:updates
 ```
+
+## Properties
+
+| name     | default    | description                                                             |
+|----------|------------|-------------------------------------------------------------------------|
+| excludes | alpha,beta | Dependency key words to be excluded from result as comma separated list |
