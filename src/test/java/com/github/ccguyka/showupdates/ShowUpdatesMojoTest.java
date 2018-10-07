@@ -74,4 +74,22 @@ public class ShowUpdatesMojoTest extends AbstractMojoTestCase {
         verify(log).info("  groupId:artifactId ... 1.2.3 -> 1.2.4");
         verifyNoMoreInteractions(log);
     }
+
+    @Test
+    public void testExcludeBlacklistedUpdates() throws Exception {
+        final Artifact artifact = new DefaultArtifact("groupId", "artifactId", "1.1.1", "compile", "type",
+                "classifier", null);
+        when(project.getParentArtifact()).thenReturn(artifact);
+        final List<ArtifactVersion> updates = new ArrayList<>();
+        updates.add(new DefaultArtifactVersion("1.2.0"));
+        updates.add(new DefaultArtifactVersion("2.0.0-beta1"));
+        when(artifactMetadataSource
+                .retrieveAvailableVersions(artifact, localRepository, remoteArtifactRepositories)).thenReturn(updates);
+
+        mojo.execute();
+
+        verify(log).info("Available parent updates:");
+        verify(log).info("  groupId:artifactId ... 1.1.1 -> 1.2.0");
+        verifyNoMoreInteractions(log);
+    }
 }

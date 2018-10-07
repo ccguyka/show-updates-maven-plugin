@@ -53,6 +53,9 @@ public class ShowUpdatesMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}")
     protected MavenProject project;
 
+    @Parameter( property = "excludes", defaultValue = "alpha,beta" )
+    private final String[] excludes = new String[] { "alpha", "beta" };
+
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         final Optional<Map<Artifact, ArtifactVersion>> parentUpdate = getParentUpdate();
@@ -72,7 +75,10 @@ public class ShowUpdatesMojo extends AbstractMojo {
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
                     localRepository, remoteArtifactRepositories, getLog()).getUpdate(parent);
 
-            return Optional.of(new FilterLatestUpdates().getLatestUpdates(updates));
+            final Map<Artifact, List<ArtifactVersion>> filteredUpdates = new FilterExcludedArtifacts(excludes)
+                    .filter(updates);
+
+            return Optional.of(new FilterLatestUpdates().getLatestUpdates(filteredUpdates));
         }
 
         return Optional.empty();
@@ -87,7 +93,10 @@ public class ShowUpdatesMojo extends AbstractMojo {
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
                     localRepository, remoteArtifactRepositories, getLog()).getUpdates(artifacts);
 
-            return Optional.of(new FilterLatestUpdates().getLatestUpdates(updates));
+            final Map<Artifact, List<ArtifactVersion>> filteredUpdates = new FilterExcludedArtifacts(excludes)
+                    .filter(updates);
+
+            return Optional.of(new FilterLatestUpdates().getLatestUpdates(filteredUpdates));
         }
 
         return Optional.empty();
@@ -100,7 +109,10 @@ public class ShowUpdatesMojo extends AbstractMojo {
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
                     localRepository, remoteArtifactRepositories, getLog()).getUpdates(filterArtifacts);
 
-            return Optional.of(new FilterLatestUpdates().getLatestUpdates(updates));
+            final Map<Artifact, List<ArtifactVersion>> filteredUpdates = new FilterExcludedArtifacts(excludes)
+                    .filter(updates);
+
+            return Optional.of(new FilterLatestUpdates().getLatestUpdates(filteredUpdates));
         }
 
         return Optional.empty();
