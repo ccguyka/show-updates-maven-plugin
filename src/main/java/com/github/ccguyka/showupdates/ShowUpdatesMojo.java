@@ -53,7 +53,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}")
     protected MavenProject project;
 
-    @Parameter( property = "excludes", defaultValue = "alpha,beta" )
+    @Parameter(property = "excludes", defaultValue = "alpha,beta")
     private final String[] excludes = new String[] { "alpha", "beta" };
 
     @Override
