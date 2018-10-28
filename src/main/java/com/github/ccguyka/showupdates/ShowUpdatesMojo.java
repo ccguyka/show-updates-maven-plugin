@@ -54,7 +54,10 @@ public class ShowUpdatesMojo extends AbstractMojo {
     protected MavenProject project;
 
     @Parameter(property = "excludes", defaultValue = "alpha,beta")
-    private final String[] excludes = new String[] { "alpha", "beta" };
+    private String[] excludes = new String[] { "alpha", "beta", "SNAPSHOT" };
+
+    @Parameter(property = "versions", defaultValue = "major")
+    private String versions = "major";
 
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
@@ -78,7 +81,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
             final Map<Artifact, List<ArtifactVersion>> filteredUpdates = new FilterExcludedArtifacts(excludes)
                     .filter(updates);
 
-            return Optional.of(new FilterLatestUpdates().getLatestUpdates(filteredUpdates));
+            return Optional.of(getFilterVersions().filter(filteredUpdates));
         }
 
         return Optional.empty();
@@ -96,7 +99,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
             final Map<Artifact, List<ArtifactVersion>> filteredUpdates = new FilterExcludedArtifacts(excludes)
                     .filter(updates);
 
-            return Optional.of(new FilterLatestUpdates().getLatestUpdates(filteredUpdates));
+            return Optional.of(getFilterVersions().filter(filteredUpdates));
         }
 
         return Optional.empty();
@@ -112,7 +115,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
             final Map<Artifact, List<ArtifactVersion>> filteredUpdates = new FilterExcludedArtifacts(excludes)
                     .filter(updates);
 
-            return Optional.of(new FilterLatestUpdates().getLatestUpdates(filteredUpdates));
+            return Optional.of(getFilterVersions().filter(filteredUpdates));
         }
 
         return Optional.empty();
@@ -132,7 +135,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
                     localRepository, remoteArtifactRepositories, getLog()).getUpdates(artifacts);
 
-            return Optional.of(new FilterLatestUpdates().getLatestUpdates(updates));
+            return Optional.of(getFilterVersions().filter(updates));
         }
 
         return Optional.empty();
@@ -157,6 +160,14 @@ public class ShowUpdatesMojo extends AbstractMojo {
         } catch (final IOException e) {
             getLog().warn("Not able to read pom.xml file");
             return artifacts;
+        }
+    }
+
+    private VersionFilter getFilterVersions() {
+        if ("minor".equals(versions)) {
+            return new MinorVersionFilter();
+        } else {
+            return new MajorVersionFilter();
         }
     }
 }
