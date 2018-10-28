@@ -26,4 +26,4 @@ mvn com.github.ccguyka:show-updates-maven-plugin:updates
 | name     | default             | description                                                             |
 |----------|---------------------|-------------------------------------------------------------------------|
 | excludes | alpha,beta,SNAPSHOT | Dependency key words to be excluded from result as comma separated list |
-| versions | major               | Show either major or minor version updates. Default: major              |
+| versions | major               | Show either major or minor version updates.                             |
