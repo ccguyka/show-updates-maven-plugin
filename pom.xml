@@ -40,8 +40,8 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <maven.version>3.5.4</maven.version>
-        <maven-plugin-annotations.version>3.5.2</maven-plugin-annotations.version>
+        <maven.version>3.6.0</maven.version>
+        <maven-plugin-annotations.version>3.6.0</maven-plugin-annotations.version>
         <junit.version>4.12</junit.version>
     </properties>
 
