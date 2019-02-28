@@ -53,7 +53,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
     @Parameter(defaultValue = "${project}")
     protected MavenProject project;
 
-    @Parameter(property = "excludes", defaultValue = "alpha,beta")
+    @Parameter(property = "excludes", defaultValue = "alpha,beta,SNAPSHOT")
     private String[] excludes = new String[] { "alpha", "beta", "SNAPSHOT" };
 
     @Parameter(property = "versions", defaultValue = "major")
@@ -135,7 +135,10 @@ public class ShowUpdatesMojo extends AbstractMojo {
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
                     localRepository, remoteArtifactRepositories, getLog()).getUpdates(artifacts);
 
-            return Optional.of(getFilterVersions().filter(updates));
+            final Map<Artifact, List<ArtifactVersion>> filteredUpdates = new FilterExcludedArtifacts(excludes)
+                    .filter(updates);
+
+            return Optional.of(getFilterVersions().filter(filteredUpdates));
         }
 
         return Optional.empty();
