@@ -1,11 +1,11 @@
 package com.github.ccguyka.showupdates.sink;
 
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.plugin.logging.Log;
+
+import com.github.ccguyka.showupdates.objects.DependencyUpdate;
+import com.github.ccguyka.showupdates.objects.DependencyUpdates;
 
 public class LogUpdatesSink {
 
@@ -17,31 +17,24 @@ public class LogUpdatesSink {
         this.log = log;
     }
 
-    public void printUpdates(final Map<Artifact, ArtifactVersion> latestUpdates) {
-        if (!latestUpdates.isEmpty()) {
+    public void printUpdates(final DependencyUpdates latestUpdates) {
+        if (!latestUpdates.getDependency().isEmpty()) {
             log.info("Available " + type + " updates:");
-            for (final Entry<Artifact, ArtifactVersion> latestUpdate : latestUpdates.entrySet()) {
-                log.info(getLineText(latestUpdate));
+
+            for (final DependencyUpdate dependencyUpdate : latestUpdates.getDependency()) {
+                log.info(getLineText(dependencyUpdate));
             }
         }
     }
 
-    private String getLineText(final Entry<Artifact, ArtifactVersion> latestUpdate) {
+    private String getLineText(final DependencyUpdate latestUpdate) {
         final StringBuilder result = new StringBuilder();
         result.append("  ");
-        result.append(getDependency(latestUpdate.getKey()));
+        result.append(latestUpdate.getName());
         result.append(" ... ");
-        result.append(getCurrentVersion(latestUpdate.getKey()));
+        result.append(latestUpdate.getCurrentVersion());
         result.append(" -> ");
-        result.append(latestUpdate.getValue());
+        result.append(latestUpdate.getUpdates().stream().collect(Collectors.joining(",")));
         return result.toString();
-    }
-
-    private String getCurrentVersion(final Artifact artifact) {
-        return artifact.getBaseVersion();
-    }
-
-    private String getDependency(final Artifact artifact) {
-        return artifact.getGroupId() + ":" + artifact.getArtifactId();
     }
 }
