@@ -1,4 +1,4 @@
-package com.github.ccguyka.showupdates;
+package com.github.ccguyka.showupdates.filter;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;

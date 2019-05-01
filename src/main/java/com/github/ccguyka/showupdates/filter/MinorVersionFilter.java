@@ -1,4 +1,4 @@
-package com.github.ccguyka.showupdates;
+package com.github.ccguyka.showupdates.filter;
 
 import java.util.HashMap;
 import java.util.List;
