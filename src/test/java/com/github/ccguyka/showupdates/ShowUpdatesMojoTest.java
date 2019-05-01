@@ -15,6 +15,7 @@ import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
 import org.apache.maven.artifact.repository.ArtifactRepository;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 import org.apache.maven.execution.MavenSession;
+import org.apache.maven.model.Build;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 import org.apache.maven.project.MavenProject;
@@ -43,6 +44,9 @@ public class ShowUpdatesMojoTest extends AbstractMojoTestCase {
         remoteArtifactRepositories = mock(List.class);
         localRepository = mock(ArtifactRepository.class);
         project = mock(MavenProject.class);
+        Build build = mock(Build.class);
+        when(build.getDirectory()).thenReturn("target/" + getBasedir());
+        when(project.getBuild()).thenReturn(build);
 
         mojo = (ShowUpdatesMojo) lookupEmptyMojo("updates", "src/test/resources/test-mojo-pom.xml");
         setVariableValueToObject(mojo, "mavenSession", mavenSession);

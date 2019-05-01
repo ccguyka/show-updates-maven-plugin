@@ -4,13 +4,13 @@ import java.util.List;
 
 public class DependencyUpdates {
 
-    private List<DependencyUpdate> dependency;
+    private List<ArtifactUpdate> artifacts;
 
-    public DependencyUpdates(List<DependencyUpdate> dependency) {
-        this.dependency = dependency;
+    public DependencyUpdates(List<ArtifactUpdate> artifacts) {
+        this.artifacts = artifacts;
     }
 
-    public List<DependencyUpdate> getDependency() {
-        return dependency;
+    public List<ArtifactUpdate> getArtifacts() {
+        return artifacts;
     }
 }

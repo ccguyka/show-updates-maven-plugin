@@ -2,15 +2,15 @@ package com.github.ccguyka.showupdates.objects;
 
 import java.util.List;
 
-public class DependencyUpdate {
+public class ArtifactUpdate {
 
     private String name;
-    private String currentVersion;
+    private String current;
     private List<String> updates;
 
-    public DependencyUpdate(String name, String currentVersion, List<String> updates) {
+    public ArtifactUpdate(String name, String current, List<String> updates) {
         this.name = name;
-        this.currentVersion = currentVersion;
+        this.current = current;
         this.updates = updates;
     }
 
@@ -18,8 +18,8 @@ public class DependencyUpdate {
         return name;
     }
 
-    public String getCurrentVersion() {
-        return currentVersion;
+    public String getCurrent() {
+        return current;
     }
 
     public List<String> getUpdates() {

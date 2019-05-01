@@ -2,32 +2,32 @@ package com.github.ccguyka.showupdates.objects;
 
 public class ProjectUpdates {
 
-    private DependencyUpdates parentUpdates;
-    private DependencyUpdates dependencyUpdates;
-    private DependencyUpdates pluginUpdates;
-    private DependencyUpdates dependencyManagementUpdates;
+    private DependencyUpdates parent;
+    private DependencyUpdates dependency;
+    private DependencyUpdates plugin;
+    private DependencyUpdates dependencyManagement;
 
     private ProjectUpdates(Builder builder) {
-        this.parentUpdates = builder.parentUpdates;
-        this.dependencyUpdates = builder.dependencyUpdates;
-        this.pluginUpdates = builder.pluginUpdates;
-        this.dependencyManagementUpdates = builder.dependencyManagementUpdates;
+        this.parent = builder.parent;
+        this.dependency = builder.dependency;
+        this.plugin = builder.plugin;
+        this.dependencyManagement = builder.dependencyManagement;
     }
 
-    public DependencyUpdates getParentUpdates() {
-        return parentUpdates;
+    public DependencyUpdates getParent() {
+        return parent;
     }
 
-    public DependencyUpdates getDependencyUpdates() {
-        return dependencyUpdates;
+    public DependencyUpdates getDependency() {
+        return dependency;
     }
 
-    public DependencyUpdates getPluginUpdates() {
-        return pluginUpdates;
+    public DependencyUpdates getPlugin() {
+        return plugin;
     }
 
-    public DependencyUpdates getDependencyManagementUpdates() {
-        return dependencyManagementUpdates;
+    public DependencyUpdates getDependencyManagement() {
+        return dependencyManagement;
     }
 
     public static Builder builder() {
@@ -35,31 +35,31 @@ public class ProjectUpdates {
     }
 
     public static final class Builder {
-        private DependencyUpdates parentUpdates;
-        private DependencyUpdates dependencyUpdates;
-        private DependencyUpdates pluginUpdates;
-        private DependencyUpdates dependencyManagementUpdates;
+        private DependencyUpdates parent;
+        private DependencyUpdates dependency;
+        private DependencyUpdates plugin;
+        private DependencyUpdates dependencyManagement;
 
         private Builder() {
         }
 
-        public Builder withParentUpdates(DependencyUpdates parentUpdates) {
-            this.parentUpdates = parentUpdates;
+        public Builder withParentUpdates(DependencyUpdates parent) {
+            this.parent = parent;
             return this;
         }
 
-        public Builder withDependencyUpdates(DependencyUpdates dependencyUpdates) {
-            this.dependencyUpdates = dependencyUpdates;
+        public Builder withDependencyUpdates(DependencyUpdates dependency) {
+            this.dependency = dependency;
             return this;
         }
 
-        public Builder withPluginUpdates(DependencyUpdates pluginUpdates) {
-            this.pluginUpdates = pluginUpdates;
+        public Builder withPluginUpdates(DependencyUpdates plugin) {
+            this.plugin = plugin;
             return this;
         }
 
-        public Builder withDependencyManagementUpdates(DependencyUpdates dependencyManagementUpdates) {
-            this.dependencyManagementUpdates = dependencyManagementUpdates;
+        public Builder withDependencyManagementUpdates(DependencyUpdates dependencyManagement) {
+            this.dependencyManagement = dependencyManagement;
             return this;
         }
 

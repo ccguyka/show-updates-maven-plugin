@@ -1,5 +1,6 @@
 package com.github.ccguyka.showupdates;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -27,9 +28,10 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 import com.github.ccguyka.showupdates.consumer.PrintUpdates;
+import com.github.ccguyka.showupdates.consumer.SaveUpdates;
 import com.github.ccguyka.showupdates.filter.FilterExcludedArtifacts;
 import com.github.ccguyka.showupdates.filter.VersionFilter;
-import com.github.ccguyka.showupdates.objects.DependencyUpdate;
+import com.github.ccguyka.showupdates.objects.ArtifactUpdate;
 import com.github.ccguyka.showupdates.objects.DependencyUpdates;
 import com.github.ccguyka.showupdates.objects.ProjectUpdates;
 import com.github.ccguyka.showupdates.producer.ArtifactSource;
@@ -80,11 +82,12 @@ public class ShowUpdatesMojo extends AbstractMojo {
                 .build();
 
         PrintUpdates.print(projectUpdates, getLog());
+        SaveUpdates.save(projectUpdates, getLog(), getReportsDirectory(project));
     }
 
     private DependencyUpdates getParentUpdate() {
         final Artifact parent = project.getParentArtifact();
-        List<DependencyUpdate> dependencyUpdates = new ArrayList<>();
+        List<ArtifactUpdate> dependencyUpdates = new ArrayList<>();
         if (parent != null) {
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
                     localRepository, remoteArtifactRepositories, getLog()).getUpdate(parent);
@@ -93,7 +96,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
                     .filter(updates);
 
             ArtifactVersion filter = getFilterVersions().filter(filteredUpdates).get(parent);
-            DependencyUpdate dependencyUpdate = from(parent, filter);
+            ArtifactUpdate dependencyUpdate = from(parent, filter);
             if (dependencyUpdate != null) {
                 dependencyUpdates.add(dependencyUpdate);
             }
@@ -104,7 +107,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
 
     private DependencyUpdates getDependencyUpdates() {
         final List<Dependency> dependencies = project.getDependencies();
-        List<DependencyUpdate> dependencyUpdates = new ArrayList<>();
+        List<ArtifactUpdate> dependencyUpdates = new ArrayList<>();
         if (dependencies != null && !dependencies.isEmpty()) {
             final List<Dependency> filterDependencies = filterDependencies(dependencies);
             final List<Artifact> artifacts = new ArtifactSource(artifactFactory).getArtifacts(filterDependencies);
@@ -117,7 +120,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
 
             Map<Artifact, ArtifactVersion> filter = getFilterVersions().filter(filteredUpdates);
             for (Entry<Artifact, ArtifactVersion> entry : filter.entrySet()) {
-                DependencyUpdate dependencyUpdate = from(entry.getKey(), entry.getValue());
+                ArtifactUpdate dependencyUpdate = from(entry.getKey(), entry.getValue());
                 if (dependencyUpdate != null) {
                     dependencyUpdates.add(dependencyUpdate);
                 }
@@ -129,7 +132,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
 
     private DependencyUpdates getPluginUpdates() {
         final Set<Artifact> artifacts = project.getPluginArtifacts();
-        List<DependencyUpdate> dependencyUpdates = new ArrayList<>();
+        List<ArtifactUpdate> dependencyUpdates = new ArrayList<>();
         if (artifacts != null && !artifacts.isEmpty()) {
             final Set<Artifact> filterArtifacts = filterArtifacts(artifacts);
             final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
@@ -140,7 +143,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
 
             Map<Artifact, ArtifactVersion> filter = getFilterVersions().filter(filteredUpdates);
             for (Entry<Artifact, ArtifactVersion> entry : filter.entrySet()) {
-                DependencyUpdate dependencyUpdate = from(entry.getKey(), entry.getValue());
+                ArtifactUpdate dependencyUpdate = from(entry.getKey(), entry.getValue());
                 if (dependencyUpdate != null) {
                     dependencyUpdates.add(dependencyUpdate);
                 }
@@ -152,7 +155,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
 
     private DependencyUpdates getDependencyManagement() {
         final DependencyManagement dependencyManagement = project.getDependencyManagement();
-        List<DependencyUpdate> dependencyUpdates = new ArrayList<>();
+        List<ArtifactUpdate> dependencyUpdates = new ArrayList<>();
         if (dependencyManagement == null) {
             return new DependencyUpdates(dependencyUpdates);
         }
@@ -170,7 +173,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
 
             Map<Artifact, ArtifactVersion> filter = getFilterVersions().filter(filteredUpdates);
             for (Entry<Artifact, ArtifactVersion> entry : filter.entrySet()) {
-                DependencyUpdate dependencyUpdate = from(entry.getKey(), entry.getValue());
+                ArtifactUpdate dependencyUpdate = from(entry.getKey(), entry.getValue());
                 if (dependencyUpdate != null) {
                     dependencyUpdates.add(dependencyUpdate);
                 }
@@ -180,11 +183,11 @@ public class ShowUpdatesMojo extends AbstractMojo {
         return new DependencyUpdates(dependencyUpdates);
     }
 
-    private DependencyUpdate from(Artifact artifact, ArtifactVersion artifactVersion) {
+    private ArtifactUpdate from(Artifact artifact, ArtifactVersion artifactVersion) {
         if (artifactVersion == null) {
             return null;
         }
-        return new DependencyUpdate(artifact.getGroupId() + ":" + artifact.getArtifactId(), artifact.getVersion(),
+        return new ArtifactUpdate(artifact.getGroupId() + ":" + artifact.getArtifactId(), artifact.getVersion(),
                 Lists.newArrayList(artifactVersion.toString()));
     }
 
@@ -212,5 +215,10 @@ public class ShowUpdatesMojo extends AbstractMojo {
 
     private VersionFilter getFilterVersions() {
         return VersionFilter.getFilterVersionsFor(versions);
+    }
+
+    protected File getReportsDirectory(MavenProject project) {
+        String buildDir = project.getBuild().getDirectory();
+        return new File(buildDir + "/maven-updates.json");
     }
 }

@@ -2,13 +2,13 @@ package com.github.ccguyka.showupdates.objects;
 
 public class Updates {
 
-    private DependencyUpdate parent;
+    private ArtifactUpdate parent;
 
-    public Updates(DependencyUpdate parent) {
+    public Updates(ArtifactUpdate parent) {
         this.parent = parent;
     }
 
-    public DependencyUpdate getParent() {
+    public ArtifactUpdate getParent() {
         return parent;
     }
 }
