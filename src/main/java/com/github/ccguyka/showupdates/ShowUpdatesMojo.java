@@ -26,11 +26,12 @@ import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
+import com.github.ccguyka.showupdates.consumer.PrintUpdates;
 import com.github.ccguyka.showupdates.objects.DependencyUpdate;
 import com.github.ccguyka.showupdates.objects.DependencyUpdates;
-import com.github.ccguyka.showupdates.sink.LogUpdatesSink;
-import com.github.ccguyka.showupdates.source.ArtifactSource;
-import com.github.ccguyka.showupdates.source.UpdateSource;
+import com.github.ccguyka.showupdates.objects.ProjectUpdates;
+import com.github.ccguyka.showupdates.producer.ArtifactSource;
+import com.github.ccguyka.showupdates.producer.UpdateSource;
 import com.google.common.collect.Lists;
 
 /**
@@ -69,11 +70,14 @@ public class ShowUpdatesMojo extends AbstractMojo {
         DependencyUpdates dependencyUpdates = getDependencyUpdates();
         DependencyUpdates pluginUpdates = getPluginUpdates();
         DependencyUpdates dependencyManagementUpdates = getDependencyManagement();
+        ProjectUpdates projectUpdates = ProjectUpdates.builder()
+                .withParentUpdates(parentUpdate)
+                .withDependencyUpdates(dependencyUpdates)
+                .withPluginUpdates(pluginUpdates)
+                .withDependencyManagementUpdates(dependencyManagementUpdates)
+                .build();
 
-        new LogUpdatesSink("parent", getLog()).printUpdates(parentUpdate);
-        new LogUpdatesSink("dependency", getLog()).printUpdates(dependencyUpdates);
-        new LogUpdatesSink("plugin", getLog()).printUpdates(pluginUpdates);
-        new LogUpdatesSink("dependency management", getLog()).printUpdates(dependencyManagementUpdates);
+        PrintUpdates.print(projectUpdates, getLog());
     }
 
     private DependencyUpdates getParentUpdate() {

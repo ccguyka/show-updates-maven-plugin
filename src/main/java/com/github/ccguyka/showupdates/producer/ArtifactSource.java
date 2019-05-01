@@ -1,4 +1,4 @@
-package com.github.ccguyka.showupdates.source;
+package com.github.ccguyka.showupdates.producer;
 
 import java.util.ArrayList;
 import java.util.List;
