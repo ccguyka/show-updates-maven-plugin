@@ -1,4 +1,4 @@
-package com.github.ccguyka.showupdates;
+package com.github.ccguyka.showupdates.filter;
 
 import java.util.List;
 import java.util.Map;
@@ -10,4 +10,13 @@ public interface VersionFilter {
 
     Map<Artifact, ArtifactVersion> filter(Map<Artifact, List<ArtifactVersion>> updates);
 
+
+
+    static VersionFilter getFilterVersionsFor(Object versions) {
+        if ("minor".equals(versions)) {
+            return new MinorVersionFilter();
+        } else {
+            return new MajorVersionFilter();
+        }
+    }
 }

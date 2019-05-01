@@ -27,6 +27,8 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 
 import com.github.ccguyka.showupdates.consumer.PrintUpdates;
+import com.github.ccguyka.showupdates.filter.FilterExcludedArtifacts;
+import com.github.ccguyka.showupdates.filter.VersionFilter;
 import com.github.ccguyka.showupdates.objects.DependencyUpdate;
 import com.github.ccguyka.showupdates.objects.DependencyUpdates;
 import com.github.ccguyka.showupdates.objects.ProjectUpdates;
@@ -209,10 +211,6 @@ public class ShowUpdatesMojo extends AbstractMojo {
     }
 
     private VersionFilter getFilterVersions() {
-        if ("minor".equals(versions)) {
-            return new MinorVersionFilter();
-        } else {
-            return new MajorVersionFilter();
-        }
+        return VersionFilter.getFilterVersionsFor(versions);
     }
 }
