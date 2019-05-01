@@ -206,6 +206,9 @@
                             <goal>sign</goal>
                         </goals>
                         <phase>verify</phase>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
