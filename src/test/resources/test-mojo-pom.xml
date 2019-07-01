@@ -23,12 +23,23 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>groupId</groupId>
+            <artifactId>artifactId</artifactId>
+            <version>1.1.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
             <plugin>
                 <groupId>com.github.ccguyka</groupId>
                 <artifactId>show-updates-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>groupId</groupId>
+                <artifactId>artifactId</artifactId>
+                <version>1.1.1</version>
             </plugin>
         </plugins>
     </build>
