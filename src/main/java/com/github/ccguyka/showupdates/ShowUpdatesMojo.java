@@ -107,25 +107,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
 
     private DependencyUpdates getDependencyUpdates() {
         final List<Dependency> dependencies = project.getDependencies();
-        List<ArtifactUpdate> dependencyUpdates = new ArrayList<>();
-        if (dependencies != null && !dependencies.isEmpty()) {
-            final List<Dependency> filterDependencies = filterDependencies(dependencies);
-            final List<Artifact> artifacts = new ArtifactSource(artifactFactory).getArtifacts(filterDependencies);
-
-            final Map<Artifact, List<ArtifactVersion>> updates = new UpdateSource(artifactMetadataSource,
-                    localRepository, remoteArtifactRepositories, getLog()).getUpdates(artifacts);
-
-            final Map<Artifact, List<ArtifactVersion>> filteredUpdates = new FilterExcludedArtifacts(excludes)
-                    .filter(updates);
-
-            Map<Artifact, ArtifactVersion> filter = getFilterVersions().filter(filteredUpdates);
-            for (Entry<Artifact, ArtifactVersion> entry : filter.entrySet()) {
-                ArtifactUpdate dependencyUpdate = from(entry.getKey(), entry.getValue());
-                if (dependencyUpdate != null) {
-                    dependencyUpdates.add(dependencyUpdate);
-                }
-            }
-        }
+        List<ArtifactUpdate> dependencyUpdates = getDependencyUpdates(dependencies);
 
         return new DependencyUpdates(dependencyUpdates);
     }
@@ -155,12 +137,18 @@ public class ShowUpdatesMojo extends AbstractMojo {
 
     private DependencyUpdates getDependencyManagement() {
         final DependencyManagement dependencyManagement = project.getDependencyManagement();
-        List<ArtifactUpdate> dependencyUpdates = new ArrayList<>();
         if (dependencyManagement == null) {
-            return new DependencyUpdates(dependencyUpdates);
+            return new DependencyUpdates(new ArrayList<>());
         }
 
         final List<Dependency> dependencies = dependencyManagement.getDependencies();
+        List<ArtifactUpdate> dependencyUpdates = getDependencyUpdates(dependencies);
+
+        return new DependencyUpdates(dependencyUpdates);
+    }
+
+    private List<ArtifactUpdate> getDependencyUpdates(final List<Dependency> dependencies) {
+        List<ArtifactUpdate> dependencyUpdates = new ArrayList<>();
         if (dependencies != null && !dependencies.isEmpty()) {
             final List<Dependency> filterDependencies = filterDependencies(dependencies);
             final List<Artifact> artifacts = new ArtifactSource(artifactFactory).getArtifacts(filterDependencies);
@@ -179,8 +167,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
                 }
             }
         }
-
-        return new DependencyUpdates(dependencyUpdates);
+        return dependencyUpdates;
     }
 
     private ArtifactUpdate from(Artifact artifact, ArtifactVersion artifactVersion) {
