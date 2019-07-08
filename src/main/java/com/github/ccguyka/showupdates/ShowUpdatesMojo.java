@@ -1,5 +1,8 @@
 package com.github.ccguyka.showupdates;
 
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,8 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.stream.Collectors;
-
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
@@ -73,10 +74,10 @@ public class ShowUpdatesMojo extends AbstractMojo {
         DependencyUpdates pluginUpdates = getPluginUpdates();
         DependencyUpdates dependencyManagementUpdates = getDependencyManagement();
         ProjectUpdates projectUpdates = ProjectUpdates.builder()
-                .withParentUpdates(parentUpdate)
-                .withDependencyUpdates(dependencyUpdates)
-                .withPluginUpdates(pluginUpdates)
-                .withDependencyManagementUpdates(dependencyManagementUpdates)
+                .withParent(parentUpdate)
+                .withDependency(dependencyUpdates)
+                .withPlugin(pluginUpdates)
+                .withDependencyManagement(dependencyManagementUpdates)
                 .build();
 
         PrintUpdates.print(projectUpdates, getLog());
@@ -179,8 +180,9 @@ public class ShowUpdatesMojo extends AbstractMojo {
     private List<Dependency> filterDependencies(final List<Dependency> dependencies) {
         try {
             final String content = new String(Files.readAllBytes(Paths.get(project.getFile().getAbsolutePath())));
-            return dependencies.stream().filter(dependency -> content.contains(dependency.getArtifactId()))
-                    .collect(Collectors.toList());
+            return dependencies.stream()
+                    .filter(dependency -> content.contains(dependency.getArtifactId()))
+                    .collect(toList());
         } catch (final IOException e) {
             getLog().warn("Not able to read pom.xml file");
             return dependencies;
@@ -190,8 +192,9 @@ public class ShowUpdatesMojo extends AbstractMojo {
     private Set<Artifact> filterArtifacts(final Set<Artifact> artifacts) {
         try {
             final String content = new String(Files.readAllBytes(Paths.get(project.getFile().getAbsolutePath())));
-            return artifacts.stream().filter(artifact -> content.contains(artifact.getArtifactId()))
-                    .collect(Collectors.toSet());
+            return artifacts.stream()
+                    .filter(artifact -> content.contains(artifact.getArtifactId()))
+                    .collect(toSet());
         } catch (final IOException e) {
             getLog().warn("Not able to read pom.xml file");
             return artifacts;

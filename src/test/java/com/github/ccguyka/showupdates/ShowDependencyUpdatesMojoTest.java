@@ -28,7 +28,6 @@ import com.google.common.collect.Lists;
 
 public class ShowDependencyUpdatesMojoTest extends AbstractMojoTestCase {
 
-    private MavenSession mavenSession;
     private ArtifactMetadataSource artifactMetadataSource;
     private ArtifactFactory artifactFactory;
     private List<ArtifactRepository> remoteArtifactRepositories;
@@ -43,7 +42,7 @@ public class ShowDependencyUpdatesMojoTest extends AbstractMojoTestCase {
         // required for mojo lookups to work
         super.setUp();
 
-        mavenSession = mock(MavenSession.class);
+        MavenSession mavenSession = mock(MavenSession.class);
         artifactMetadataSource = mock(ArtifactMetadataSource.class);
         artifactFactory = mock(ArtifactFactory.class);
         remoteArtifactRepositories = mock(List.class);

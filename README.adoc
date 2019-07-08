@@ -1,39 +1,37 @@
-[![Travis](https://img.shields.io/travis/ccguyka/show-updates-maven-plugin.svg?style=flat-square)](https://travis-ci.org/ccguyka/show-updates-maven-plugin)
-[![Coverage](https://img.shields.io/coveralls/github/ccguyka/show-updates-maven-plugin.svg?style=flat-square)](https://coveralls.io/github/ccguyka/show-updates-maven-plugin)
-[![Known Vulnerabilities](https://snyk.io/test/github/ccguyka/show-updates-maven-plugin/badge.svg?style=flat-square)](https://snyk.io/test/github/ccguyka/show-updates-maven-plugin)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
+image:https://img.shields.io/travis/ccguyka/show-updates-maven-plugin.svg?style=flat-square[Travis,link=https://travis-ci.org/ccguyka/show-updates-maven-plugin]
+image:https://img.shields.io/coveralls/github/ccguyka/show-updates-maven-plugin.svg?style=flat-square[Coverage,link=https://coveralls.io/github/ccguyka/show-updates-maven-plugin]
+image:https://snyk.io/test/github/ccguyka/show-updates-maven-plugin/badge.svg?style=flat-square[Known Vulnerabilities,link=https://snyk.io/test/github/ccguyka/show-updates-maven-plugin]
+image:https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square[License: MIT,link=https://opensource.org/licenses/MIT]
 
-# Show Maven Updates Plugin
+= Show Maven Updates Plugin
 
 Show the latest update version of maven dependencies.
 
-# Usage
+= Goals
 
-## How to build it
+== Updates
 
-```
-mvn install
-```
+The `updates` goal prints all dependencies to console and creates a `maven-updates.json` file for all maven modules.
 
-## How to use it
-
-```
+----
 mvn com.github.ccguyka:show-updates-maven-plugin:updates
-```
 
-## Properties
+----
 
-| name     | default             | description                                                             |
-|----------|---------------------|-------------------------------------------------------------------------|
-| excludes | alpha,beta,SNAPSHOT | Dependency key words to be excluded from result as comma separated list |
-| versions | major               | Show either major or minor version updates.                             |
+=== Properties
 
-## Example
+|===
+|name |default |description
 
-This is how the output will look like. In this case the `guava-testlib` module of [guava](https://github.com/google/guava/tree/v27.0) v27.0
+|excludes |alpha,beta,SNAPSHOT |Dependency key words to be excluded from result as comma separated list
+|versions |major |Show either major or minor version updates.
+|===
 
+=== Example
 
-```
+This is how the output will look like. In this case the `guava-testlib` module of https://github.com/google/guava/tree/v27.0[guava] v27.0
+
+----
 [INFO] --------------------< com.google.guava:guava-tests >--------------------
 [INFO] Building Guava Unit Tests 27.0-jre                                 [4/5]
 [INFO] --------------------------------[ jar ]---------------------------------
@@ -57,4 +55,22 @@ This is how the output will look like. In this case the `guava-testlib` module o
 [INFO]   com.google.errorprone:error_prone_annotations ... 2.2.0 -> 2.3.2
 [INFO]   org.easymock:easymock ... 3.0 -> 4.0.1
 [INFO]   org.mockito:mockito-core ... 2.19.0 -> 2.23.0
-```
+----
+
+== Aggregate
+
+The `aggregate` goal uses the created `maven-updates.json` of the `updates` goal and combines them into one `aggregated-maven-updates.json` within the root module.
+
+----
+mvn com.github.ccguyka:show-updates-maven-plugin:aggregate
+
+----
+
+= Developer notes
+
+How to build and test the project.
+
+----
+mvn test
+
+----

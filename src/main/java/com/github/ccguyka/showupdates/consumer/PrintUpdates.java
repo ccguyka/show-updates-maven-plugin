@@ -1,6 +1,6 @@
 package com.github.ccguyka.showupdates.consumer;
 
-import java.util.stream.Collectors;
+import static java.util.stream.Collectors.joining;
 
 import org.apache.maven.plugin.logging.Log;
 
@@ -49,7 +49,7 @@ public class PrintUpdates {
         result.append(" ... ");
         result.append(updates.getCurrent());
         result.append(" -> ");
-        result.append(updates.getUpdates().stream().collect(Collectors.joining(",")));
+        result.append(updates.getUpdates().stream().collect(joining(",")));
         return result.toString();
     }
 
