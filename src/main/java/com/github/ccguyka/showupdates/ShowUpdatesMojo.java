@@ -20,8 +20,6 @@ import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.model.DependencyManagement;
 import org.apache.maven.plugin.AbstractMojo;
-import org.apache.maven.plugin.MojoExecutionException;
-import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
@@ -69,7 +67,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
     private String versions = "major";
 
     @Override
-    public void execute() throws MojoExecutionException, MojoFailureException {
+    public void execute() {
         DependencyUpdates parentUpdate = getParentUpdate();
         DependencyUpdates dependencyUpdates = getDependencyUpdates();
         DependencyUpdates pluginUpdates = getPluginUpdates();

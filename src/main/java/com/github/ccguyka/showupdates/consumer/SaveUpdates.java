@@ -14,9 +14,9 @@ public class SaveUpdates {
 
     private final ObjectMapper mapper;
 
-    private Log log;
+    private final Log log;
 
-    public SaveUpdates(Log log) {
+    private SaveUpdates(Log log) {
         this.log = log;
 
         mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);

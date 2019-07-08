@@ -2,10 +2,10 @@ package com.github.ccguyka.showupdates.objects;
 
 public class ProjectUpdates {
 
-    private DependencyUpdates parent;
-    private DependencyUpdates dependency;
-    private DependencyUpdates plugin;
-    private DependencyUpdates dependencyManagement;
+    private final DependencyUpdates parent;
+    private final DependencyUpdates dependency;
+    private final DependencyUpdates plugin;
+    private final DependencyUpdates dependencyManagement;
 
     private ProjectUpdates(Builder builder) {
         this.parent = builder.parent;

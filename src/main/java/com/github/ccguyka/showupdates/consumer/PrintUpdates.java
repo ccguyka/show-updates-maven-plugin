@@ -10,8 +10,8 @@ import com.github.ccguyka.showupdates.objects.ProjectUpdates;
 
 public class PrintUpdates {
 
-    private ProjectUpdates projectUpdates;
-    private Log log;
+    private final ProjectUpdates projectUpdates;
+    private final Log log;
 
     private PrintUpdates(ProjectUpdates projectUpdates, Log log) {
         this.projectUpdates = projectUpdates;
@@ -32,7 +32,7 @@ public class PrintUpdates {
 
     }
 
-    public void printUpdates(String type, final DependencyUpdates updates) {
+    private void printUpdates(String type, final DependencyUpdates updates) {
         if (!updates.getArtifacts().isEmpty()) {
             log.info("Available " + type + " updates:");
 

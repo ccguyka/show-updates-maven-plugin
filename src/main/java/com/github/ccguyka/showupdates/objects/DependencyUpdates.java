@@ -4,7 +4,7 @@ import java.util.List;
 
 public class DependencyUpdates {
 
-    private List<ArtifactUpdate> artifacts;
+    private final List<ArtifactUpdate> artifacts;
 
     public DependencyUpdates(List<ArtifactUpdate> artifacts) {
         this.artifacts = artifacts;
