@@ -207,7 +207,7 @@
                         </goals>
                         <phase>verify</phase>
                         <configuration>
-                            <skip>true</skip>
+                            <skip>${gpg.skip}</skip>
                         </configuration>
                     </execution>
                 </executions>
@@ -239,4 +239,13 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <properties>
+                <gpg.skip>false</gpg.skip>
+            </properties>
+        </profile>
+    </profiles>
 </project>
