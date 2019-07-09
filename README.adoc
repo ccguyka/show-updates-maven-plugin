@@ -1,4 +1,4 @@
-image:https://img.shields.io/maven-central/v/com.github.ccguyka/show-updates-maven-plugin.svg?style=flat-square[Maven Central]
+image:https://img.shields.io/maven-central/v/com.github.ccguyka/show-updates-maven-plugin.svg?style=flat-square[Maven Central,link=https://search.maven.org/search?q=g:com.github.ccguyka%20AND%20a:show-updates-maven-plugin]
 image:https://img.shields.io/travis/ccguyka/show-updates-maven-plugin.svg?style=flat-square[Travis,link=https://travis-ci.org/ccguyka/show-updates-maven-plugin]
 image:https://img.shields.io/coveralls/github/ccguyka/show-updates-maven-plugin.svg?style=flat-square[Coverage,link=https://coveralls.io/github/ccguyka/show-updates-maven-plugin]
 image:https://snyk.io/test/github/ccguyka/show-updates-maven-plugin/badge.svg?style=flat-square[Known Vulnerabilities,link=https://snyk.io/test/github/ccguyka/show-updates-maven-plugin]
@@ -16,7 +16,6 @@ The `updates` goal prints all dependencies to console and creates a `maven-updat
 
 ----
 mvn com.github.ccguyka:show-updates-maven-plugin:updates
-
 ----
 
 === Properties
@@ -64,7 +63,6 @@ The `aggregate` goal uses the created `maven-updates.json` of the `updates` goal
 
 ----
 mvn com.github.ccguyka:show-updates-maven-plugin:aggregate
-
 ----
 
 = Developer notes
@@ -75,7 +73,6 @@ How to build and test the project.
 
 ----
 mvn test
-
 ----
 
 == Release deployment to central repository
@@ -84,5 +81,4 @@ Based on https://central.sonatype.org/pages/apache-maven.html#manually-releasing
 
 ----
 mvn release:clean release:prepare release:perform -Prelease
-
 ----
