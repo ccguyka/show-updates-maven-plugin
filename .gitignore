@@ -4,6 +4,11 @@
 .project
 .classpath
 
+### IntelliJ ###
+
+.idea/
+*.iml
+
 ### Maven ###
 target/
 pom.xml.bak

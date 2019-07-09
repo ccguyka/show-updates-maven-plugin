@@ -19,7 +19,7 @@ public class MinorVersionFilterTest {
     private MinorVersionFilter filter = new MinorVersionFilter();
 
     @Test
-    public void filterMinorVersion() throws Exception {
+    public void filterMinorVersion() {
         Map<Artifact, List<ArtifactVersion>> updates = new HashMap<>();
         final Artifact artifact = new DefaultArtifact("groupId", "artifactId", "1.1.1", "compile", "type",
                 "classifier", null);

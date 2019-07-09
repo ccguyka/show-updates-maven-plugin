@@ -23,9 +23,7 @@ import org.junit.Test;
 
 public class ShowParentUpdatesMojoTest extends AbstractMojoTestCase {
 
-    private MavenSession mavenSession;
     private ArtifactMetadataSource artifactMetadataSource;
-    private ArtifactFactory artifactFactory;
     private List<ArtifactRepository> remoteArtifactRepositories;
     private ArtifactRepository localRepository;
     private MavenProject project;
@@ -38,14 +36,14 @@ public class ShowParentUpdatesMojoTest extends AbstractMojoTestCase {
         // required for mojo lookups to work
         super.setUp();
 
-        mavenSession = mock(MavenSession.class);
+        MavenSession mavenSession = mock(MavenSession.class);
         artifactMetadataSource = mock(ArtifactMetadataSource.class);
-        artifactFactory = mock(ArtifactFactory.class);
+        ArtifactFactory artifactFactory = mock(ArtifactFactory.class);
         remoteArtifactRepositories = mock(List.class);
         localRepository = mock(ArtifactRepository.class);
         project = mock(MavenProject.class);
         Build build = mock(Build.class);
-        when(build.getDirectory()).thenReturn("target/" + getBasedir());
+        when(build.getDirectory()).thenReturn(getBasedir() + "/target");
         when(project.getBuild()).thenReturn(build);
 
         mojo = (ShowUpdatesMojo) lookupEmptyMojo("updates", "src/test/resources/test-mojo-pom.xml");

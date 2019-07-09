@@ -1,0 +1,30 @@
+{
+  "parent" : {
+    "artifacts" : [ {
+      "name" : "test:test",
+      "current" : "1",
+      "updates" : [ "2" ]
+    } ]
+  },
+  "dependency" : {
+    "artifacts" : [ {
+      "name" : "test:test",
+      "current" : "1",
+      "updates" : [ "2" ]
+    } ]
+  },
+  "plugin" : {
+    "artifacts" : [ {
+      "name" : "test:test",
+      "current" : "1",
+      "updates" : [ "2" ]
+    } ]
+  },
+  "dependencyManagement" : {
+    "artifacts" : [ {
+      "name" : "test:test",
+      "current" : "1",
+      "updates" : [ "2" ]
+    } ]
+  }
+}

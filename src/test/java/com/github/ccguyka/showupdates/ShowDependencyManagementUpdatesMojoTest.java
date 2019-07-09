@@ -26,7 +26,6 @@ import org.junit.Test;
 
 public class ShowDependencyManagementUpdatesMojoTest extends AbstractMojoTestCase {
 
-    private MavenSession mavenSession;
     private ArtifactMetadataSource artifactMetadataSource;
     private ArtifactFactory artifactFactory;
     private List<ArtifactRepository> remoteArtifactRepositories;
@@ -41,7 +40,7 @@ public class ShowDependencyManagementUpdatesMojoTest extends AbstractMojoTestCas
         // required for mojo lookups to work
         super.setUp();
 
-        mavenSession = mock(MavenSession.class);
+        MavenSession mavenSession = mock(MavenSession.class);
         artifactMetadataSource = mock(ArtifactMetadataSource.class);
         artifactFactory = mock(ArtifactFactory.class);
         remoteArtifactRepositories = mock(List.class);
