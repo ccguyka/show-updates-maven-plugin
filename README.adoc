@@ -1,5 +1,5 @@
 image:https://img.shields.io/maven-central/v/com.github.ccguyka/show-updates-maven-plugin.svg?style=flat-square[Maven Central,link=https://search.maven.org/search?q=g:com.github.ccguyka%20AND%20a:show-updates-maven-plugin]
-image:https://img.shields.io/travis/ccguyka/show-updates-maven-plugin.svg?style=flat-square[Travis,link=https://travis-ci.org/ccguyka/show-updates-maven-plugin]
+image:https://img.shields.io/travis/ccguyka/show-updates-maven-plugin/master?style=flat-square[Travis,link=https://travis-ci.org/ccguyka/show-updates-maven-plugin]
 image:https://img.shields.io/coveralls/github/ccguyka/show-updates-maven-plugin.svg?style=flat-square[Coverage,link=https://coveralls.io/github/ccguyka/show-updates-maven-plugin]
 image:https://snyk.io/test/github/ccguyka/show-updates-maven-plugin/badge.svg?style=flat-square[Known Vulnerabilities,link=https://snyk.io/test/github/ccguyka/show-updates-maven-plugin]
 image:https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square[License: MIT,link=https://opensource.org/licenses/MIT]
