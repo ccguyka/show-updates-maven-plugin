@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.factory.ArtifactFactory;
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource;
@@ -81,7 +82,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
                 .build();
 
         PrintUpdates.print(projectUpdates, getLog());
-        SaveUpdates.save(projectUpdates, getLog(), getReportsDirectory(project));
+        SaveUpdates.save(projectUpdates, getLog(), getReportsFile(project));
     }
 
     private DependencyUpdates getParentUpdate() {
@@ -205,7 +206,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
         return VersionFilter.getFilterVersionsFor(versions);
     }
 
-    protected File getReportsDirectory(MavenProject project) {
+    protected File getReportsFile(MavenProject project) {
         String buildDir = project.getBuild().getDirectory();
         return new File(buildDir + "/maven-updates.json");
     }
