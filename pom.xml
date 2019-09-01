@@ -84,6 +84,11 @@
             <artifactId>jackson-databind</artifactId>
             <version>2.9.9.3</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.seratch</groupId>
+            <artifactId>jslack</artifactId>
+            <version>2.1.2</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -113,6 +118,12 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>3.13.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8</artifactId>
+            <version>2.24.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

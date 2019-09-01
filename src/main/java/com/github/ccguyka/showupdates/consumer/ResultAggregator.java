@@ -6,14 +6,12 @@ import java.util.List;
 
 import org.apache.maven.plugin.logging.Log;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import com.github.ccguyka.showupdates.objects.ProjectUpdates;
 
 public class ResultAggregator {
 
-    private final ObjectMapper mapper;
     private final List<File> reportFiles;
+    private final ReadUpdatesFile readUpdatesFile;
     private final ProjectUpdatesMerger merger;
     private final Log log;
 
@@ -21,7 +19,7 @@ public class ResultAggregator {
         this.reportFiles = reportFiles;
         this.log = log;
 
-        this.mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+        this.readUpdatesFile = new ReadUpdatesFile();
         this.merger = new ProjectUpdatesMerger();
     }
 
@@ -34,7 +32,7 @@ public class ResultAggregator {
         ProjectUpdates completeProjectUpdates = ProjectUpdates.builder().build();
         for(File reportFile : reportFiles) {
             try {
-                ProjectUpdates projectUpdates = mapper.readValue(reportFile, ProjectUpdates.class);
+                ProjectUpdates projectUpdates = readUpdatesFile.readFromFile(reportFile);
                 completeProjectUpdates = merger.merge(completeProjectUpdates, projectUpdates);
             } catch (IOException e) {
                 log.error("Could not read from file", e);

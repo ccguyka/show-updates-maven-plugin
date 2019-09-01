@@ -1,0 +1,46 @@
+{
+  "parent" : {
+    "artifacts" : [ {
+      "name" : "projectA:projectA",
+      "current" : "1",
+      "updates" : [ "2" ]
+    }, {
+      "name" : "projectB:projectB",
+      "current" : "1",
+      "updates" : [ "2" ]
+    } ]
+  },
+  "dependency" : {
+    "artifacts" : [ {
+      "name" : "projectA:projectA",
+      "current" : "1",
+      "updates" : [ "2" ]
+    }, {
+      "name" : "projectB:projectB",
+      "current" : "1",
+      "updates" : [ "2" ]
+    } ]
+  },
+  "plugin" : {
+    "artifacts" : [ {
+      "name" : "projectA:projectA",
+      "current" : "1",
+      "updates" : [ "2" ]
+    }, {
+      "name" : "projectB:projectB",
+      "current" : "1",
+      "updates" : [ "2" ]
+    } ]
+  },
+  "dependencyManagement" : {
+    "artifacts" : [ {
+      "name" : "projectA:projectA",
+      "current" : "1",
+      "updates" : [ "2" ]
+    }, {
+      "name" : "projectB:projectB",
+      "current" : "1",
+      "updates" : [ "2" ]
+    } ]
+  }
+}
