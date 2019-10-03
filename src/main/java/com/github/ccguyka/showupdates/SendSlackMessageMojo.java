@@ -74,7 +74,7 @@ public class SendSlackMessageMojo extends AbstractMojo {
     }
 
 
-    private void checkIfSuccessful(Response response) throws IOException {
+    private void checkIfSuccessful(Response response) {
         if (response.getCode() >= 300) {
             getLog().error(String.format("Sending message to slack failed. Status code: %s and message %s",
                     response.getCode(), response.getMessage()));

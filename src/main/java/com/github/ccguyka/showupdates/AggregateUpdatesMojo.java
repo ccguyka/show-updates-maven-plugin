@@ -36,7 +36,7 @@ public class AggregateUpdatesMojo extends AbstractMojo {
             List<File> reportFiles = reactorProjects.stream().map(this::getReportFile).collect(toList());
             ProjectUpdates aggregate = ResultAggregator.aggregate(reportFiles, getLog());
             PrintUpdates.print(aggregate, getLog());
-            SaveUpdates.save(aggregate, getLog(), getAggregationReportFile());
+            SaveUpdates.save(aggregate, getLog(), getAggregationReportDirectory());
         } else {
             getLog().info("Aggregation is only executed in root module");
         }
@@ -47,7 +47,7 @@ public class AggregateUpdatesMojo extends AbstractMojo {
         return new File(buildDir + "/maven-updates.json");
     }
 
-    protected File getAggregationReportFile() {
+    protected File getAggregationReportDirectory() {
         String buildDir = project.getBuild().getDirectory();
         return new File(buildDir + "/aggregated-maven-updates.json");
     }
