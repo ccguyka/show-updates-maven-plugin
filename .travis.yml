@@ -3,7 +3,7 @@ sudo: false
 
 addons:
   sonarcloud:
-    organization: "default"
+    organization: "ccguyka"
     token:
       secure: "lEsuA8rHiY1Btkrdh1v8wTEnX1IGPMc2MEFRAi/TjM7DROJJaIjW1sTEBJXwcpfK/42vDJYb0ZMndBngIaktMOu8wkW+ogn9iZGZI+Uds1Q/J5PQ0i6af02+iiV4RnyFl23k7lfwdfP/DT+HxGebjyPNh+qC9OVezsM8JkZPwL26q/YfaG8lTlqSofKs1Q54l5K7bwBuEts9X/q89Ze6ACwTn9/vXUb+YgsbbAxxvkqDTXB4h3IGRR/1oxOR+BpDkmXKWAf7DhVIccRHiaBHK57gW1sC9sotQOAGussNbQP2E+6yqjwuTvSDCQrmsdD67DQEMjpfMrv0kvS3ETRVNUct/0xcY7FaMrW0eRNODL4tZ/4WiW4gJM2QYWbsHx7elIRAKJXQudcJn9dyOK/aqVngPmLJO0Jo8IG+UX81GsP4MINu4tx6782oMcO3mAqkRFgPxBoXrZDhE+ND2scnJbSTbNsl0/Lw8UqNKW6UZOZnUoiYCG/eFp3gW3CT/wvXb+vbWB5os0lbHzDPUojGv5xIiNj7KrgazCSjTHfjeqtgvs1bXuuNuGeeqxcOebhAJaov/akq8JX5dHapkPl3ygXzDGzODrLtS/9EgeWoCqBV0i7S8QWOL1uARXExropV3k3ke1ms4W8RrrGKoEajRBSGzyepDFLWa0fJIW2Dx30="
 
