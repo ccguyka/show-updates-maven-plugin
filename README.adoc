@@ -1,10 +1,12 @@
-image:https://img.shields.io/travis/ccguyka/show-updates-maven-plugin/master?style=flat-square[Travis,link=https://travis-ci.org/ccguyka/show-updates-maven-plugin]
-image:https://img.shields.io/sonar/quality_gate/ccguyka_show-updates-maven-plugin?server=https%3A%2F%2Fsonarcloud.io&style=flat-square[Sonar Quality Gate,link=https://sonarcloud.io/dashboard?id=ccguyka_show-updates-maven-plugin]
-image:https://img.shields.io/sonar/coverage/ccguyka_show-updates-maven-plugin?server=https%3A%2F%2Fsonarcloud.io&style=flat-square[Sonar Coverage,link=https://sonarcloud.io/dashboard?id=ccguyka_show-updates-maven-plugin]
-image:https://img.shields.io/github/last-commit/ccguyka/show-updates-maven-plugin?style=flat-square[GitHub last commit,link=https://github.com/ccguyka/show-updates-maven-plugin/commits/master]
-image:https://img.shields.io/snyk/vulnerabilities/github/ccguyka/show-updates-maven-plugin?style=flat-square[Snyk Vulnerabilities for GitHub Repo,link=https://snyk.io/test/github/ccguyka/show-updates-maven-plugin]
-image:https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square[License: MIT,link=https://opensource.org/licenses/MIT]
-image:https://img.shields.io/maven-central/v/com.github.ccguyka/show-updates-maven-plugin.svg?style=flat-square[Maven Central,link=https://search.maven.org/search?q=g:com.github.ccguyka%20AND%20a:show-updates-maven-plugin]
+image:https://img.shields.io/travis/ccguyka/show-updates-maven-plugin/master[Travis,link=https://travis-ci.org/ccguyka/show-updates-maven-plugin]
+image:https://sonarcloud.io/api/project_badges/measure?project=ccguyka_show-updates-maven-plugin&metric=alert_status[Sonar Quality Gate,link=https://sonarcloud.io/dashboard?id=ccguyka_show-updates-maven-plugin]
+image:https://sonarcloud.io/api/project_badges/measure?project=ccguyka_show-updates-maven-plugin&metric=coverage[Sonar Coverage,link=https://sonarcloud.io/dashboard?id=ccguyka_show-updates-maven-plugin]
+image:https://img.shields.io/github/last-commit/ccguyka/show-updates-maven-plugin[GitHub last commit,link=https://github.com/ccguyka/show-updates-maven-plugin/commits/master]
+image:https://img.shields.io/snyk/vulnerabilities/github/ccguyka/show-updates-maven-plugin[Snyk Vulnerabilities for GitHub Repo,link=https://snyk.io/test/github/ccguyka/show-updates-maven-plugin]
+image:https://img.shields.io/badge/License-MIT-yellow.svg[License: MIT,link=https://opensource.org/licenses/MIT]
+image:https://img.shields.io/maven-central/v/com.github.ccguyka/show-updates-maven-plugin.svg[Maven Central,link=https://search.maven.org/search?q=g:com.github.ccguyka%20AND%20a:show-updates-maven-plugin]
+image:http://www.0pdd.com/svg?name=ccguyka/show-updates-maven-plugin[0pdd,link=http://www.0pdd.com/p?name=ccguyka/show-updates-maven-plugin]
+image:http://i.jpeek.org/com.github.ccguyka/show-updates-maven-plugin/badge.svg[jpeek report,link=http://i.jpeek.org/com.github.ccguyka/show-updates-maven-plugin/index.html]
 
 = Show Maven Updates Plugin
 
