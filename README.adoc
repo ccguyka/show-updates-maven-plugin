@@ -67,6 +67,14 @@ The `aggregate` goal uses the created `maven-updates.json` of the `updates` goal
 mvn com.github.ccguyka:show-updates-maven-plugin:aggregate
 ----
 
+== Send report to slack
+
+The `send-slack-message` goal will send the report to given https://api.slack.com/incoming-webhooks[slack webhook].
+
+----
+mvn com.github.ccguyka:show-updates-maven-plugin:send-slack-message -Dtoken=<slack-webhook>
+----
+
 = Developer notes
 
 == Build
