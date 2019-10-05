@@ -12,6 +12,9 @@ import org.apache.maven.artifact.versioning.ArtifactVersion;
 
 import com.google.common.collect.Lists;
 
+/**
+ * @todo Write tests for FilterExcludedArtifacts class.
+ */
 public class FilterExcludedArtifacts {
 
     private final List<String> excludes;
