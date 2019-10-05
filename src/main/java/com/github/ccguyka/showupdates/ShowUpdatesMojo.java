@@ -40,7 +40,7 @@ import com.google.common.collect.Lists;
 
 /**
  * Shows all dependencies and parent updates.
- * @todo Reduce size of class
+ * @todo #1:60min Reduce size of class
  */
 @Mojo(name = "updates")
 public class ShowUpdatesMojo extends AbstractMojo {
@@ -192,7 +192,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
     }
 
     /**
-     * @todo Fix reporting of transitive dependency updates e.g. when guava is dependency and spring-guava is a transitive dependency.
+     * @todo #1:60min Fix reporting of transitive dependency updates e.g. when guava is dependency and spring-guava is a transitive dependency.
      */
     private Set<Artifact> filterArtifacts(final Set<Artifact> artifacts) {
         try {

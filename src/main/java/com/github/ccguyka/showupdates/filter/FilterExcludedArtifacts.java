@@ -13,7 +13,7 @@ import org.apache.maven.artifact.versioning.ArtifactVersion;
 import com.google.common.collect.Lists;
 
 /**
- * @todo Write tests for FilterExcludedArtifacts class.
+ * @todo #1:30min Write tests for FilterExcludedArtifacts class.
  */
 public class FilterExcludedArtifacts {
 
