@@ -40,6 +40,7 @@ import com.google.common.collect.Lists;
 
 /**
  * Shows all dependencies and parent updates.
+ * @todo Reduce size of class
  */
 @Mojo(name = "updates")
 public class ShowUpdatesMojo extends AbstractMojo {
