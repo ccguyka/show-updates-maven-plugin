@@ -190,6 +190,9 @@ public class ShowUpdatesMojo extends AbstractMojo {
         }
     }
 
+    /**
+     * @todo Fix reporting of transitive dependency updates e.g. when guava is dependency and spring-guava is a transitive dependency.
+     */
     private Set<Artifact> filterArtifacts(final Set<Artifact> artifacts) {
         try {
             final String content = new String(Files.readAllBytes(Paths.get(project.getFile().getAbsolutePath())));
