@@ -15,7 +15,7 @@ public class ArtifactSource {
         this.artifactFactory = artifactFactory;
     }
 
-    public List<Artifact> getArtifacts(final List<Dependency> dependencies) {
+    List<Artifact> getArtifacts(final List<Dependency> dependencies) {
 
         final List<Artifact> artifacts = new ArrayList<>();
         dependencies.stream().forEach(dependency -> artifacts.add(createArtifactFrom(dependency)));

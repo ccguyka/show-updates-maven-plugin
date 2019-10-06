@@ -21,7 +21,7 @@ public class ArtifactFilter {
         this.log = log;
     }
 
-    /**
+    /*
      * @todo #1:60min Fix reporting of transitive dependency updates e.g. when guava is dependency and spring-guava is a transitive dependency.
      */
     public Set<Artifact> filter(final Set<Artifact> artifacts) {

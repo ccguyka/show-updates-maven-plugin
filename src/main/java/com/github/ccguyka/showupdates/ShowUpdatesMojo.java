@@ -21,6 +21,11 @@ import com.github.ccguyka.showupdates.filter.FilterExcludedArtifacts;
 import com.github.ccguyka.showupdates.filter.VersionFilter;
 import com.github.ccguyka.showupdates.objects.ProjectUpdates;
 import com.github.ccguyka.showupdates.producer.ArtifactSource;
+import com.github.ccguyka.showupdates.producer.DependencyManagementUpdatesSource;
+import com.github.ccguyka.showupdates.producer.DependencyUpdatesSource;
+import com.github.ccguyka.showupdates.producer.ProjectUpdatesSource;
+import com.github.ccguyka.showupdates.producer.ParentUpdateSource;
+import com.github.ccguyka.showupdates.producer.PluginUpdatesSource;
 import com.github.ccguyka.showupdates.producer.UpdateSource;
 
 /**
@@ -62,13 +67,18 @@ public class ShowUpdatesMojo extends AbstractMojo {
     }
 
     private ProjectUpdates getProjectUpdates() {
-        GetProjectUpdates getProjectUpdates = new GetProjectUpdates(project,
-                new UpdateSource(artifactMetadataSource, localRepository, remoteArtifactRepositories, getLog()),
-                new ArtifactSource(artifactFactory),
-                new FilterExcludedArtifacts(excludes),
-                VersionFilter.getFilterVersionsFor(versions),
-                new DependencyFilter(project, getLog()),
-                new ArtifactFilter(project, getLog()));
+        UpdateSource updateSource = new UpdateSource(artifactMetadataSource, localRepository, remoteArtifactRepositories, getLog());
+        ArtifactSource artifactSource = new ArtifactSource(artifactFactory);
+        FilterExcludedArtifacts filterExcludedArtifacts = new FilterExcludedArtifacts(excludes);
+        VersionFilter versionFilter = VersionFilter.getFilterVersionsFor(versions);
+        DependencyFilter dependencyFilter = new DependencyFilter(project, getLog());
+        ArtifactFilter artifactFilter = new ArtifactFilter(project, getLog());
+
+        ProjectUpdatesSource getProjectUpdates = new ProjectUpdatesSource(
+                new ParentUpdateSource(project, updateSource, filterExcludedArtifacts, versionFilter),
+                new DependencyUpdatesSource(project, updateSource, artifactSource, filterExcludedArtifacts, versionFilter, dependencyFilter),
+                new PluginUpdatesSource(project, updateSource, filterExcludedArtifacts, versionFilter, artifactFilter),
+                new DependencyManagementUpdatesSource(project, updateSource, artifactSource, filterExcludedArtifacts, versionFilter, dependencyFilter));
 
         return getProjectUpdates.getProjectUpdates();
     }
