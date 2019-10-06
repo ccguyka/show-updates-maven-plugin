@@ -29,7 +29,7 @@ public class UpdateSource {
         this.log = log;
     }
 
-    public Map<Artifact, List<ArtifactVersion>> getUpdate(final Artifact artifact) {
+    Map<Artifact, List<ArtifactVersion>> getUpdate(final Artifact artifact) {
         final Map<Artifact, List<ArtifactVersion>> updates = new HashMap<>();
         try {
             final List<ArtifactVersion> retrieveAvailableVersions = artifactMetadataSource
