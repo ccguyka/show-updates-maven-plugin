@@ -12,9 +12,9 @@ image:http://i.jpeek.org/com.github.ccguyka/show-updates-maven-plugin/badge.svg[
 
 Show the latest update version of maven dependencies.
 
-= Goals
+== Goals
 
-== Updates
+=== Updates
 
 The `updates` goal prints all dependencies to console and creates a `maven-updates.json` file for all maven modules.
 
@@ -22,7 +22,7 @@ The `updates` goal prints all dependencies to console and creates a `maven-updat
 mvn com.github.ccguyka:show-updates-maven-plugin:updates
 ----
 
-=== Properties
+==== Properties
 
 |===
 |name |default |description
@@ -31,7 +31,7 @@ mvn com.github.ccguyka:show-updates-maven-plugin:updates
 |versions |major |Show either major or minor version updates.
 |===
 
-=== Example
+==== Example
 
 This is how the output will look like. In this case the `guava-testlib` module of https://github.com/google/guava/tree/v27.0[guava] v27.0
 
@@ -61,7 +61,7 @@ This is how the output will look like. In this case the `guava-testlib` module o
 [INFO]   org.mockito:mockito-core ... 2.19.0 -> 2.23.0
 ----
 
-== Aggregate
+=== Aggregate
 
 The `aggregate` goal uses the created `maven-updates.json` of the `updates` goal and combines them into one `aggregated-maven-updates.json` within the root module.
 
@@ -69,7 +69,7 @@ The `aggregate` goal uses the created `maven-updates.json` of the `updates` goal
 mvn com.github.ccguyka:show-updates-maven-plugin:aggregate
 ----
 
-== Send report to slack
+=== Send report to slack
 
 The `send-slack-message` goal will send the report to given https://api.slack.com/incoming-webhooks[slack webhook].
 
@@ -77,9 +77,9 @@ The `send-slack-message` goal will send the report to given https://api.slack.co
 mvn com.github.ccguyka:show-updates-maven-plugin:send-slack-message -Dtoken=<slack-webhook>
 ----
 
-= Developer notes
+== Developer notes
 
-== Build
+=== Build
 
 How to build and test the project.
 
@@ -87,7 +87,7 @@ How to build and test the project.
 mvn test
 ----
 
-== Release deployment to central repository
+=== Release deployment to central repository
 
 Based on https://central.sonatype.org/pages/apache-maven.html#manually-releasing-the-deployment-to-the-central-repository[official documentation]
 
