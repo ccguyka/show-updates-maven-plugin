@@ -10,9 +10,7 @@ public interface VersionFilter {
 
     Map<Artifact, ArtifactVersion> filter(Map<Artifact, List<ArtifactVersion>> updates);
 
-
-
-    static VersionFilter getFilterVersionsFor(Object versions) {
+    static VersionFilter getFilterVersionsFor(String versions) {
         if ("minor".equals(versions)) {
             return new MinorVersionFilter();
         } else {
