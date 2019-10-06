@@ -7,13 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Predicate;
+
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
 
 import com.google.common.collect.Lists;
 
 /**
- * @todo #1:30min Write tests for FilterExcludedArtifacts class.
+ * Filter out artifacts of which the version contains one of the excludes.
  */
 public class FilterExcludedArtifacts {
 
@@ -38,6 +39,6 @@ public class FilterExcludedArtifacts {
 
     private Predicate<? super ArtifactVersion> filterExcludedArtifact() {
         return artifact -> Lists.newArrayList(excludes).stream()
-                .noneMatch(exclude -> artifact.toString().contains(exclude));
+                .noneMatch(artifact.toString()::contains);
     }
 }
