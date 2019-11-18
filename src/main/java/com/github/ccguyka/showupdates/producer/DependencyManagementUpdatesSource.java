@@ -7,7 +7,7 @@ import org.apache.maven.model.Dependency;
 import org.apache.maven.model.DependencyManagement;
 import org.apache.maven.project.MavenProject;
 
-import com.github.ccguyka.showupdates.filter.DependencyFilter;
+import com.github.ccguyka.showupdates.filter.DependencyManagementFilter;
 import com.github.ccguyka.showupdates.filter.FilterExcludedArtifacts;
 import com.github.ccguyka.showupdates.filter.VersionFilter;
 import com.github.ccguyka.showupdates.objects.ArtifactUpdate;
@@ -19,7 +19,7 @@ public class DependencyManagementUpdatesSource extends BasicDependencyUpdatesSou
 
     public DependencyManagementUpdatesSource(MavenProject project, UpdateSource updateSource,
             ArtifactSource artifactSource, FilterExcludedArtifacts filterExcludedArtifacts, VersionFilter versionFilter,
-            DependencyFilter dependencyFilter) {
+            DependencyManagementFilter dependencyFilter) {
         super(updateSource, artifactSource, filterExcludedArtifacts, versionFilter, dependencyFilter);
 
         this.project = project;

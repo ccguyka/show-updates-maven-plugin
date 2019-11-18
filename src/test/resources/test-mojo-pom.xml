@@ -24,12 +24,22 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>groupId</groupId>
-            <artifactId>artifactId</artifactId>
+            <groupId>dep-groupId</groupId>
+            <artifactId>dep-artifactId</artifactId>
             <version>1.1.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>dep-mgnt-groupId</groupId>
+                <artifactId>dep-mgnt-artifactId</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <build>
         <plugins>
             <plugin>
@@ -37,8 +47,8 @@
                 <artifactId>show-updates-maven-plugin</artifactId>
             </plugin>
             <plugin>
-                <groupId>groupId</groupId>
-                <artifactId>artifactId</artifactId>
+                <groupId>plugin-groupId</groupId>
+                <artifactId>plugin-artifactId</artifactId>
                 <version>1.1.1</version>
             </plugin>
         </plugins>

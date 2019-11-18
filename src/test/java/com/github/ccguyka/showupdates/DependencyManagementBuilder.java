@@ -5,9 +5,11 @@ import org.apache.maven.model.DependencyManagement;
 
 class DependencyManagementBuilder {
 
-    public static DependencyManagement from(Dependency dependency) {
+    public static DependencyManagement from(Dependency... dependencies) {
         DependencyManagement dependencyManagement = new DependencyManagement();
-        dependencyManagement.addDependency(dependency);
+        for (Dependency dependency : dependencies) {
+            dependencyManagement.addDependency(dependency);
+        }
         return dependencyManagement;
     }
 }
