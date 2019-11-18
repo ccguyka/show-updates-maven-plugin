@@ -15,17 +15,18 @@ import org.apache.maven.project.MavenProject;
 
 import com.github.ccguyka.showupdates.consumer.PrintUpdates;
 import com.github.ccguyka.showupdates.consumer.SaveUpdates;
-import com.github.ccguyka.showupdates.filter.ArtifactFilter;
 import com.github.ccguyka.showupdates.filter.DependencyFilter;
+import com.github.ccguyka.showupdates.filter.DependencyManagementFilter;
 import com.github.ccguyka.showupdates.filter.FilterExcludedArtifacts;
+import com.github.ccguyka.showupdates.filter.PluginFilter;
 import com.github.ccguyka.showupdates.filter.VersionFilter;
 import com.github.ccguyka.showupdates.objects.ProjectUpdates;
 import com.github.ccguyka.showupdates.producer.ArtifactSource;
 import com.github.ccguyka.showupdates.producer.DependencyManagementUpdatesSource;
 import com.github.ccguyka.showupdates.producer.DependencyUpdatesSource;
-import com.github.ccguyka.showupdates.producer.ProjectUpdatesSource;
 import com.github.ccguyka.showupdates.producer.ParentUpdateSource;
 import com.github.ccguyka.showupdates.producer.PluginUpdatesSource;
+import com.github.ccguyka.showupdates.producer.ProjectUpdatesSource;
 import com.github.ccguyka.showupdates.producer.UpdateSource;
 
 /**
@@ -72,13 +73,14 @@ public class ShowUpdatesMojo extends AbstractMojo {
         FilterExcludedArtifacts filterExcludedArtifacts = new FilterExcludedArtifacts(excludes);
         VersionFilter versionFilter = VersionFilter.getFilterVersionsFor(versions);
         DependencyFilter dependencyFilter = new DependencyFilter(project, getLog());
-        ArtifactFilter artifactFilter = new ArtifactFilter(project, getLog());
+        DependencyManagementFilter dependencyManagementFilter = new DependencyManagementFilter(project, getLog());
+        PluginFilter artifactFilter = new PluginFilter(project, getLog());
 
         ProjectUpdatesSource getProjectUpdates = new ProjectUpdatesSource(
                 new ParentUpdateSource(project, updateSource, filterExcludedArtifacts, versionFilter),
                 new DependencyUpdatesSource(project, updateSource, artifactSource, filterExcludedArtifacts, versionFilter, dependencyFilter),
                 new PluginUpdatesSource(project, updateSource, filterExcludedArtifacts, versionFilter, artifactFilter),
-                new DependencyManagementUpdatesSource(project, updateSource, artifactSource, filterExcludedArtifacts, versionFilter, dependencyFilter));
+                new DependencyManagementUpdatesSource(project, updateSource, artifactSource, filterExcludedArtifacts, versionFilter, dependencyManagementFilter));
 
         return getProjectUpdates.getProjectUpdates();
     }
