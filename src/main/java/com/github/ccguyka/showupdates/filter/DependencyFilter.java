@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toList;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.logging.Log;
@@ -37,8 +38,8 @@ public class DependencyFilter {
         return dependencies.stream()
             .filter(dependency -> pom.getDependencies()
                     .stream()
-                    .anyMatch(dep -> dep.getArtifactId().equals(dependency.getArtifactId())
-                            &&  dep.getGroupId().equals(dependency.getGroupId())))
+                    .anyMatch(dep -> Objects.equals(dep.getArtifactId(), dependency.getArtifactId())
+                            && Objects.equals(dep.getGroupId(), dependency.getGroupId())))
             .collect(toList());
     }
 }

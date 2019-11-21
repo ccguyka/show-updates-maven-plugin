@@ -1,5 +1,6 @@
 package com.github.ccguyka.showupdates.filter.pom;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -7,9 +8,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Project {
 
-    private List<Dependency> dependencies;
-    private DependencyManagement dependencyManagement;
-    private Build build;
+    private List<Dependency> dependencies = new ArrayList<>();
+    private DependencyManagement dependencyManagement = new DependencyManagement();
+    private Build build = new Build();
 
     public List<Dependency> getDependencies() {
         return dependencies;
