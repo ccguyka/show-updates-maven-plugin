@@ -3,6 +3,7 @@ package com.github.ccguyka.showupdates.filter;
 import static java.util.stream.Collectors.toSet;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.maven.artifact.Artifact;
@@ -12,7 +13,7 @@ import org.apache.maven.project.MavenProject;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.github.ccguyka.showupdates.filter.pom.Project;
 
-public class PluginFilter  {
+public class PluginFilter {
 
     private final MavenProject project;
     private final Log log;
@@ -37,8 +38,8 @@ public class PluginFilter  {
         return artifacts.stream()
             .filter(dependency -> pom.getBuild().getPlugins()
                     .stream()
-                    .anyMatch(dep -> dep.getArtifactId().equals(dependency.getArtifactId())
-                            &&  dep.getGroupId().equals(dependency.getGroupId())))
+                    .anyMatch(dep -> Objects.equals(dep.getArtifactId(), dependency.getArtifactId())
+                            && Objects.equals(dep.getGroupId(), dependency.getGroupId())))
             .collect(toSet());
 }
 }
