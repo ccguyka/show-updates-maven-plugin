@@ -10,14 +10,16 @@ import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.module.kotlin.KotlinModule;
 import com.github.ccguyka.showupdates.filter.pom.Project;
 
 public class DependencyFilter {
 
     private final MavenProject project;
     private final Log log;
-    private final XmlMapper xmlMapper = new XmlMapper();
+    private final ObjectMapper xmlMapper = new XmlMapper().registerModule(new KotlinModule());
 
     public DependencyFilter(MavenProject project, Log log) {
         this.project = project;

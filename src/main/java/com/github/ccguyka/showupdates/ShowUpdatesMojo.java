@@ -63,7 +63,7 @@ public class ShowUpdatesMojo extends AbstractMojo {
     public void execute() {
         ProjectUpdates projectUpdates = getProjectUpdates();
 
-        PrintUpdates.print(projectUpdates, getLog());
+        PrintUpdates.Factory.print(projectUpdates, getLog());
         SaveUpdates.save(projectUpdates, getLog(), getReportsFile(project));
     }
 

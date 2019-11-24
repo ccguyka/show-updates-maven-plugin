@@ -35,7 +35,7 @@ public class AggregateUpdatesMojo extends AbstractMojo {
         if (project.isExecutionRoot()) {
             List<File> reportFiles = reactorProjects.stream().map(this::getReportFile).collect(toList());
             ProjectUpdates aggregate = ResultAggregator.aggregate(reportFiles, getLog());
-            PrintUpdates.print(aggregate, getLog());
+            PrintUpdates.Factory.print(aggregate, getLog());
             SaveUpdates.save(aggregate, getLog(), getAggregationReportDirectory());
         } else {
             getLog().info("Aggregation is only executed in root module");
