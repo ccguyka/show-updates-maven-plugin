@@ -6,7 +6,6 @@ image:https://img.shields.io/snyk/vulnerabilities/github/ccguyka/show-updates-ma
 image:https://img.shields.io/badge/License-MIT-yellow.svg[License: MIT,link=https://opensource.org/licenses/MIT]
 image:https://img.shields.io/maven-central/v/com.github.ccguyka/show-updates-maven-plugin.svg[Maven Central,link=https://search.maven.org/search?q=g:com.github.ccguyka%20AND%20a:show-updates-maven-plugin]
 image:http://www.0pdd.com/svg?name=ccguyka/show-updates-maven-plugin[0pdd,link=http://www.0pdd.com/p?name=ccguyka/show-updates-maven-plugin]
-image:http://i.jpeek.org/com.github.ccguyka/show-updates-maven-plugin/badge.svg[jpeek report,link=http://i.jpeek.org/com.github.ccguyka/show-updates-maven-plugin/index.html]
 
 = Show Maven Updates Plugin
 
