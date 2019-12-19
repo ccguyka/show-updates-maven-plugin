@@ -92,7 +92,7 @@
         <dependency>
             <groupId>com.github.seratch</groupId>
             <artifactId>jslack</artifactId>
-            <version>3.2.5</version>
+            <version>3.3.0</version>
         </dependency>
 
         <dependency>
