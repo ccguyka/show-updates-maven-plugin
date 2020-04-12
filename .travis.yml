@@ -14,5 +14,7 @@ cache:
   directories:
     - $HOME/.m2
 
+install: skip
+
 script:
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=ccguyka_show-updates-maven-plugin
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.projectKey=ccguyka_show-updates-maven-plugin --settings .travis.settings.xml
