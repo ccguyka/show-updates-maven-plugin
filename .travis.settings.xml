@@ -1,0 +1,10 @@
+<settings>
+   <mirrors xmlns="http://maven.apache.org/SETTINGS/1.1.0">
+       <mirror>
+           <mirrorOf>central</mirrorOf>
+           <name>GCS Maven Central mirror</name>
+           <url>https://maven-central.storage-download.googleapis.com/maven2/</url>
+           <id>google-maven-central</id>
+       </mirror>
+   </mirrors>
+</settings>
