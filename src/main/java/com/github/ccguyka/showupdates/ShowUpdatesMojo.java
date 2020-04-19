@@ -56,27 +56,27 @@ public class ShowUpdatesMojo extends AbstractMojo {
     @Parameter(property = "excludes", defaultValue = "alpha,beta,SNAPSHOT")
     private String[] excludes = new String[] { "alpha", "beta", "SNAPSHOT" };
 
-    @Parameter(property = "versions", defaultValue = "major")
-    private String versions = "major";
+    @Parameter(property = "versions", defaultValue = "latest")
+    private String versions = "latest";
 
     @Override
     public void execute() {
-        ProjectUpdates projectUpdates = getProjectUpdates();
+        final ProjectUpdates projectUpdates = getProjectUpdates();
 
         PrintUpdates.print(projectUpdates, getLog());
         SaveUpdates.save(projectUpdates, getLog(), getReportsFile(project));
     }
 
     private ProjectUpdates getProjectUpdates() {
-        UpdateSource updateSource = new UpdateSource(artifactMetadataSource, localRepository, remoteArtifactRepositories, getLog());
-        ArtifactSource artifactSource = new ArtifactSource(artifactFactory);
-        FilterExcludedArtifacts filterExcludedArtifacts = new FilterExcludedArtifacts(excludes);
-        VersionFilter versionFilter = VersionFilter.getFilterVersionsFor(versions);
-        DependencyFilter dependencyFilter = new DependencyFilter(project, getLog());
-        DependencyManagementFilter dependencyManagementFilter = new DependencyManagementFilter(project, getLog());
-        PluginFilter artifactFilter = new PluginFilter(project, getLog());
+        final UpdateSource updateSource = new UpdateSource(artifactMetadataSource, localRepository, remoteArtifactRepositories, getLog());
+        final ArtifactSource artifactSource = new ArtifactSource(artifactFactory);
+        final FilterExcludedArtifacts filterExcludedArtifacts = new FilterExcludedArtifacts(excludes);
+        final VersionFilter versionFilter = VersionFilter.getFilterVersionsFor(versions);
+        final DependencyFilter dependencyFilter = new DependencyFilter(project, getLog());
+        final DependencyManagementFilter dependencyManagementFilter = new DependencyManagementFilter(project, getLog());
+        final PluginFilter artifactFilter = new PluginFilter(project, getLog());
 
-        ProjectUpdatesSource getProjectUpdates = new ProjectUpdatesSource(
+        final ProjectUpdatesSource getProjectUpdates = new ProjectUpdatesSource(
                 new ParentUpdateSource(project, updateSource, filterExcludedArtifacts, versionFilter),
                 new DependencyUpdatesSource(project, updateSource, artifactSource, filterExcludedArtifacts, versionFilter, dependencyFilter),
                 new PluginUpdatesSource(project, updateSource, filterExcludedArtifacts, versionFilter, artifactFilter),
@@ -85,8 +85,8 @@ public class ShowUpdatesMojo extends AbstractMojo {
         return getProjectUpdates.getProjectUpdates();
     }
 
-    protected File getReportsFile(MavenProject project) {
-        String buildDir = project.getBuild().getDirectory();
+    protected File getReportsFile(final MavenProject project) {
+        final String buildDir = project.getBuild().getDirectory();
         return new File(buildDir + "/maven-updates.json");
     }
 }

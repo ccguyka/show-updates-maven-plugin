@@ -27,7 +27,7 @@ mvn com.github.ccguyka:show-updates-maven-plugin:updates
 |name |default |description
 
 |excludes |alpha,beta,SNAPSHOT |Dependency key words to be excluded from result as comma separated list
-|versions |major |Show either major, minor or patch version updates.
+|versions |latest |Show either latest (patch, minor and major versions), major, minor or patch version updates.
 |===
 
 ==== Example
@@ -35,29 +35,21 @@ mvn com.github.ccguyka:show-updates-maven-plugin:updates
 This is how the output will look like. In this case the `guava-testlib` module of https://github.com/google/guava/tree/v27.0[guava] v27.0
 
 ----
-[INFO] --------------------< com.google.guava:guava-tests >--------------------
-[INFO] Building Guava Unit Tests 27.0-jre                                 [4/5]
+[INFO] -------------------< com.google.guava:guava-testlib >-------------------
+[INFO] Building Guava Testing Library 27.0-jre
 [INFO] --------------------------------[ jar ]---------------------------------
 [INFO]
-[INFO] --- show-updates-maven-plugin:0.0.1-SNAPSHOT:updates (default-cli) @ guava-tests ---
-[INFO] artifact com.google.guava:guava-testlib: checking for updates from central
+[INFO] --- show-updates-maven-plugin:updates (default-cli) @ guava-testlib ---
+[INFO] Available parent updates:
+[INFO]   com.google.guava:guava-parent ... 27.0-jre -> 27.0.1-jre, 27.1-jre, 29.0-jre
 [INFO] Available dependency updates:
-[INFO]   org.checkerframework:checker-qual ... 2.5.2 -> 2.5.7
-[INFO]   com.google.errorprone:error_prone_annotations ... 2.2.0 -> 2.3.2
-[INFO]   org.easymock:easymock ... 3.0 -> 4.0.1
-[INFO]   org.mockito:mockito-core ... 2.19.0 -> 2.23.0
+[INFO]   org.checkerframework:checker-qual ... 2.5.2 -> 2.5.8, 2.11.1, 3.3.0
+[INFO]   com.google.errorprone:error_prone_annotations ... 2.2.0 -> 2.3.4
+[INFO]   com.google.truth:truth ... 0.42 -> 0.46, 1.0.1
+[INFO]   com.google.j2objc:j2objc-annotations ... 1.1 -> 1.3
+[INFO]   junit:junit ... 4.12 -> 4.13
 [INFO] Available plugin updates:
-[INFO]   org.apache.maven.plugins:maven-jar-plugin ... 3.0.2 -> 3.1.0
-[INFO]   org.apache.maven.plugins:maven-source-plugin ... 2.1.2 -> 3.0.1
-[INFO]   org.apache.maven.plugins:maven-surefire-plugin ... 2.7.2 -> 2.22.1
-[INFO]   org.codehaus.mojo:build-helper-maven-plugin ... 1.7 -> 3.0.0
-[INFO]   org.apache.maven.plugins:maven-compiler-plugin ... 3.6.1 -> 3.8.0
-[INFO]   org.apache.maven.plugins:maven-deploy-plugin ... 2.8.2 -> 3.0.0-M1
-[INFO] Available dependency management updates:
-[INFO]   org.checkerframework:checker-qual ... 2.5.2 -> 2.5.7
-[INFO]   com.google.errorprone:error_prone_annotations ... 2.2.0 -> 2.3.2
-[INFO]   org.easymock:easymock ... 3.0 -> 4.0.1
-[INFO]   org.mockito:mockito-core ... 2.19.0 -> 2.23.0
+[INFO]   org.codehaus.mojo:animal-sniffer-maven-plugin ... 1.17 -> 1.18
 ----
 
 === Aggregate

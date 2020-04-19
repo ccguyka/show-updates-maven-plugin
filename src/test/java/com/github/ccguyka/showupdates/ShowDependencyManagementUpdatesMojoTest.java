@@ -102,11 +102,34 @@ public class ShowDependencyManagementUpdatesMojoTest extends AbstractMojoTestCas
     }
 
     @Test
+    public void testMajorUpdates() throws Exception {
+        final Artifact artifact = aManagedDependency().version("1.1.1").build();
+        final DependencyManagement dependencyManagement = DependencyManagementBuilder.from(aDependency(artifact));
+        when(project.getDependencyManagement()).thenReturn(dependencyManagement);
+        final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
+                .version("1.2.0")
+                .version("2.0.0")
+                .version("2.2.0").build();
+        mockUpdates(artifact, updates);
+        setVariableValueToObject(mojo, "versions", "major");
+
+        mojo.execute();
+
+        verify(log).info("Available dependency management updates:");
+        verify(log).info("  dep-mgnt-groupId:dep-mgnt-artifactId ... 1.1.1 -> 2.2.0");
+        verifyNoMoreInteractions(log);
+    }
+
+    @Test
     public void testMinorUpdates() throws Exception {
         final Artifact artifact = aManagedDependency().version("1.1.1").build();
         final DependencyManagement dependencyManagement = DependencyManagementBuilder.from(aDependency(artifact));
         when(project.getDependencyManagement()).thenReturn(dependencyManagement);
         final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
                 .version("1.2.0")
                 .version("2.0.0")
                 .version("2.2.0").build();
@@ -142,6 +165,27 @@ public class ShowDependencyManagementUpdatesMojoTest extends AbstractMojoTestCas
     }
 
     @Test
+    public void testLatestUpdates() throws Exception {
+        final Artifact artifact = aManagedDependency().version("1.1.1").build();
+        final DependencyManagement dependencyManagement = DependencyManagementBuilder.from(aDependency(artifact));
+        when(project.getDependencyManagement()).thenReturn(dependencyManagement);
+        final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
+                .version("1.2.0")
+                .version("2.0.0")
+                .version("2.2.0").build();
+        mockUpdates(artifact, updates);
+        setVariableValueToObject(mojo, "versions", "latest");
+
+        mojo.execute();
+
+        verify(log).info("Available dependency management updates:");
+        verify(log).info("  dep-mgnt-groupId:dep-mgnt-artifactId ... 1.1.1 -> 1.1.3, 1.2.0, 2.2.0");
+        verifyNoMoreInteractions(log);
+    }
+
+    @Test
     public void testTransitiveUpdates() throws Exception {
         final Artifact artifact = aManagedDependency().version("1.1.1").build();
         final Artifact transitiveArtifact = aManagedDependency().groupId("another-groupId").version("2.0.0").build();
@@ -149,6 +193,8 @@ public class ShowDependencyManagementUpdatesMojoTest extends AbstractMojoTestCas
                 aDependency(transitiveArtifact));
         when(project.getDependencyManagement()).thenReturn(dependencyManagement);
         mockUpdates(artifact, updates()
+                .version("1.1.2")
+                .version("1.1.3")
                 .version("1.2.0")
                 .version("2.0.0")
                 .version("2.2.0").build());

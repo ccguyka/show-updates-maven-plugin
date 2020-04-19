@@ -1,6 +1,7 @@
 package com.github.ccguyka.showupdates.producer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,6 +16,7 @@ import com.github.ccguyka.showupdates.filter.PluginFilter;
 import com.github.ccguyka.showupdates.filter.VersionFilter;
 import com.github.ccguyka.showupdates.objects.ArtifactUpdate;
 import com.github.ccguyka.showupdates.objects.DependencyUpdates;
+import com.google.common.collect.ListMultimap;
 
 public class PluginUpdatesSource extends BasicUpdatesSource {
 
@@ -24,9 +26,9 @@ public class PluginUpdatesSource extends BasicUpdatesSource {
     private final VersionFilter versionFilter;
     private final PluginFilter pluginFilter;
 
-    public PluginUpdatesSource(MavenProject project, UpdateSource updateSource,
-            FilterExcludedArtifacts filterExcludedArtifacts, VersionFilter versionFilter,
-            PluginFilter artifactFilter) {
+    public PluginUpdatesSource(final MavenProject project, final UpdateSource updateSource,
+            final FilterExcludedArtifacts filterExcludedArtifacts, final VersionFilter versionFilter,
+            final PluginFilter artifactFilter) {
         this.project = project;
         this.updateSource = updateSource;
         this.filterExcludedArtifacts = filterExcludedArtifacts;
@@ -36,16 +38,16 @@ public class PluginUpdatesSource extends BasicUpdatesSource {
 
     public DependencyUpdates getUpdates() {
         final Set<Artifact> artifacts = project.getPluginArtifacts();
-        List<ArtifactUpdate> dependencyUpdates = new ArrayList<>();
+        final List<ArtifactUpdate> dependencyUpdates = new ArrayList<>();
         if (artifacts != null && !artifacts.isEmpty()) {
             final Set<Artifact> filterArtifacts = pluginFilter.filter(artifacts);
             final Map<Artifact, List<ArtifactVersion>> updates = updateSource.getUpdates(filterArtifacts);
 
             final Map<Artifact, List<ArtifactVersion>> filteredUpdates = filterExcludedArtifacts.filter(updates);
 
-            Map<Artifact, ArtifactVersion> filter = versionFilter.filter(filteredUpdates);
-            for (Entry<Artifact, ArtifactVersion> entry : filter.entrySet()) {
-                ArtifactUpdate dependencyUpdate = from(entry.getKey(), entry.getValue());
+            final ListMultimap<Artifact, ArtifactVersion> filter = versionFilter.filter(filteredUpdates);
+            for (final Entry<Artifact, Collection<ArtifactVersion>> entry : filter.asMap().entrySet()) {
+                final ArtifactUpdate dependencyUpdate = from(entry.getKey(), entry.getValue());
                 if (dependencyUpdate != null) {
                     dependencyUpdates.add(dependencyUpdate);
                 }

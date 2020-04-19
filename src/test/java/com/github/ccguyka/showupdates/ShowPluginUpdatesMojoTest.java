@@ -102,11 +102,34 @@ public class ShowPluginUpdatesMojoTest extends AbstractMojoTestCase {
     }
 
     @Test
+    public void testMajorUpdates() throws Exception {
+        final Artifact artifact = aPlugin().version("1.1.1").build();
+        final Set<Artifact> plugins = Sets.newHashSet(artifact);
+        when(project.getPluginArtifacts()).thenReturn(plugins);
+        final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
+                .version("1.2.0")
+                .version("2.0.0")
+                .version("2.2.0").build();
+        mockUpdates(artifact, updates);
+        setVariableValueToObject(mojo, "versions", "major");
+
+        mojo.execute();
+
+        verify(log).info("Available plugin updates:");
+        verify(log).info("  plugin-groupId:plugin-artifactId ... 1.1.1 -> 2.2.0");
+        verifyNoMoreInteractions(log);
+    }
+
+    @Test
     public void testMinorUpdates() throws Exception {
         final Artifact artifact = aPlugin().version("1.1.1").build();
         final Set<Artifact> plugins = Sets.newHashSet(artifact);
         when(project.getPluginArtifacts()).thenReturn(plugins);
         final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
                 .version("1.2.0")
                 .version("2.0.0")
                 .version("2.2.0").build();
@@ -142,12 +165,35 @@ public class ShowPluginUpdatesMojoTest extends AbstractMojoTestCase {
     }
 
     @Test
+    public void testLatestUpdates() throws Exception {
+        final Artifact artifact = aPlugin().version("1.1.1").build();
+        final Set<Artifact> plugins = Sets.newHashSet(artifact);
+        when(project.getPluginArtifacts()).thenReturn(plugins);
+        final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
+                .version("1.2.0")
+                .version("2.0.0")
+                .version("2.2.0").build();
+        mockUpdates(artifact, updates);
+        setVariableValueToObject(mojo, "versions", "latest");
+
+        mojo.execute();
+
+        verify(log).info("Available plugin updates:");
+        verify(log).info("  plugin-groupId:plugin-artifactId ... 1.1.1 -> 1.1.3, 1.2.0, 2.2.0");
+        verifyNoMoreInteractions(log);
+    }
+
+    @Test
     public void testTransitiveUpdates() throws Exception {
         final Artifact artifact = aPlugin().version("1.1.1").build();
         final Artifact transitiveArtifact = aPlugin().groupId("another-groupId").version("2.0.0").build();
         final Set<Artifact> plugins = Sets.newHashSet(artifact, transitiveArtifact);
         when(project.getPluginArtifacts()).thenReturn(plugins);
         mockUpdates(artifact, updates()
+                .version("1.1.2")
+                .version("1.1.3")
                 .version("1.2.0")
                 .version("2.0.0")
                 .version("2.2.0").build());
