@@ -104,11 +104,34 @@ public class ShowDependencyUpdatesMojoTest extends AbstractMojoTestCase {
     }
 
     @Test
+    public void testMajorUpdates() throws Exception {
+        final Artifact artifact = aDependency().version("1.1.1").build();
+        final List<Dependency> dependencies = Lists.newArrayList(aDependency(artifact));
+        when(project.getDependencies()).thenReturn(dependencies);
+        final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
+                .version("1.2.0")
+                .version("2.0.0")
+                .version("2.2.0").build();
+        mockUpdates(artifact, updates);
+        setVariableValueToObject(mojo, "versions", "major");
+
+        mojo.execute();
+
+        verify(log).info("Available dependency updates:");
+        verify(log).info("  dep-groupId:dep-artifactId ... 1.1.1 -> 2.2.0");
+        verifyNoMoreInteractions(log);
+    }
+
+    @Test
     public void testMinorUpdates() throws Exception {
         final Artifact artifact = aDependency().version("1.1.1").build();
         final List<Dependency> dependencies = Lists.newArrayList(aDependency(artifact));
         when(project.getDependencies()).thenReturn(dependencies);
         final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
                 .version("1.2.0")
                 .version("2.0.0")
                 .version("2.2.0").build();
@@ -144,12 +167,35 @@ public class ShowDependencyUpdatesMojoTest extends AbstractMojoTestCase {
     }
 
     @Test
+    public void testLatestUpdates() throws Exception {
+        final Artifact artifact = aDependency().version("1.1.1").build();
+        final List<Dependency> dependencies = Lists.newArrayList(aDependency(artifact));
+        when(project.getDependencies()).thenReturn(dependencies);
+        final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
+                .version("1.2.0")
+                .version("2.0.0")
+                .version("2.2.0").build();
+        mockUpdates(artifact, updates);
+        setVariableValueToObject(mojo, "versions", "latest");
+
+        mojo.execute();
+
+        verify(log).info("Available dependency updates:");
+        verify(log).info("  dep-groupId:dep-artifactId ... 1.1.1 -> 1.1.3, 1.2.0, 2.2.0");
+        verifyNoMoreInteractions(log);
+    }
+
+    @Test
     public void testTransitiveUpdates() throws Exception {
         final Artifact artifact = aDependency().version("1.1.1").build();
         final Artifact transitiveArtifact = aDependency().groupId("another-groupId").version("2.0.0").build();
         final List<Dependency> dependencies = Lists.newArrayList(aDependency(artifact), aDependency(transitiveArtifact));
         when(project.getDependencies()).thenReturn(dependencies);
         mockUpdates(artifact, updates()
+                .version("1.1.2")
+                .version("1.1.3")
                 .version("1.2.0")
                 .version("2.0.0")
                 .version("2.2.0").build());

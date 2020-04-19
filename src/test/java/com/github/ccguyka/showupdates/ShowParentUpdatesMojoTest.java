@@ -71,7 +71,7 @@ public class ShowParentUpdatesMojoTest extends AbstractMojoTestCase {
         mojo.execute();
 
         verify(log).info("Available parent updates:");
-        verify(log).info("  parent-groupId:parent-artifactId ... 1.2.3 -> 2.1.3");
+        verify(log).info("  parent-groupId:parent-artifactId ... 1.2.3 -> 1.2.4, 2.1.3");
         verifyNoMoreInteractions(log);
     }
 
@@ -111,10 +111,32 @@ public class ShowParentUpdatesMojoTest extends AbstractMojoTestCase {
     }
 
     @Test
+    public void testMajorUpdates() throws Exception {
+        final Artifact artifact = aParent().version("1.1.1").build();
+        when(project.getParentArtifact()).thenReturn(artifact);
+        final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
+                .version("1.2.0")
+                .version("2.0.0")
+                .version("2.2.0").build();
+        mockUpdates(artifact, updates);
+        setVariableValueToObject(mojo, "versions", "major");
+
+        mojo.execute();
+
+        verify(log).info("Available parent updates:");
+        verify(log).info("  parent-groupId:parent-artifactId ... 1.1.1 -> 2.2.0");
+        verifyNoMoreInteractions(log);
+    }
+
+    @Test
     public void testMinorUpdates() throws Exception {
         final Artifact artifact = aParent().version("1.1.1").build();
         when(project.getParentArtifact()).thenReturn(artifact);
         final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
                 .version("1.2.0")
                 .version("2.0.0")
                 .version("2.2.0").build();
@@ -145,6 +167,26 @@ public class ShowParentUpdatesMojoTest extends AbstractMojoTestCase {
 
         verify(log).info("Available parent updates:");
         verify(log).info("  parent-groupId:parent-artifactId ... 1.1.1 -> 1.1.3");
+        verifyNoMoreInteractions(log);
+    }
+
+    @Test
+    public void testLatestUpdates() throws Exception {
+        final Artifact artifact = aParent().version("1.1.1").build();
+        when(project.getParentArtifact()).thenReturn(artifact);
+        final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
+                .version("1.2.0")
+                .version("2.0.0")
+                .version("2.2.0").build();
+        mockUpdates(artifact, updates);
+        setVariableValueToObject(mojo, "versions", "latest");
+
+        mojo.execute();
+
+        verify(log).info("Available parent updates:");
+        verify(log).info("  parent-groupId:parent-artifactId ... 1.1.1 -> 1.1.3, 1.2.0, 2.2.0");
         verifyNoMoreInteractions(log);
     }
 

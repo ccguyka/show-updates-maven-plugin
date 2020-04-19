@@ -1,6 +1,7 @@
 package com.github.ccguyka.showupdates.producer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -13,6 +14,7 @@ import com.github.ccguyka.showupdates.filter.DependencyFilter;
 import com.github.ccguyka.showupdates.filter.FilterExcludedArtifacts;
 import com.github.ccguyka.showupdates.filter.VersionFilter;
 import com.github.ccguyka.showupdates.objects.ArtifactUpdate;
+import com.google.common.collect.ListMultimap;
 
 class BasicDependencyUpdatesSource extends BasicUpdatesSource {
 
@@ -22,9 +24,9 @@ class BasicDependencyUpdatesSource extends BasicUpdatesSource {
     private final VersionFilter versionFilter;
     private final DependencyFilter dependencyFilter;
 
-    public BasicDependencyUpdatesSource(UpdateSource updateSource, ArtifactSource artifactSource,
-            FilterExcludedArtifacts filterExcludedArtifacts, VersionFilter versionFilter,
-            DependencyFilter dependencyFilter) {
+    public BasicDependencyUpdatesSource(final UpdateSource updateSource, final ArtifactSource artifactSource,
+            final FilterExcludedArtifacts filterExcludedArtifacts, final VersionFilter versionFilter,
+            final DependencyFilter dependencyFilter) {
         this.updateSource = updateSource;
         this.artifactSource = artifactSource;
         this.filterExcludedArtifacts = filterExcludedArtifacts;
@@ -33,7 +35,7 @@ class BasicDependencyUpdatesSource extends BasicUpdatesSource {
     }
 
     protected List<ArtifactUpdate> getDependencyUpdates(final List<Dependency> dependencies) {
-        List<ArtifactUpdate> dependencyUpdates = new ArrayList<>();
+        final List<ArtifactUpdate> dependencyUpdates = new ArrayList<>();
         if (dependencies != null && !dependencies.isEmpty()) {
             final List<Dependency> filterDependencies = dependencyFilter.filter(dependencies);
             final List<Artifact> artifacts = artifactSource.getArtifacts(filterDependencies);
@@ -42,9 +44,9 @@ class BasicDependencyUpdatesSource extends BasicUpdatesSource {
 
             final Map<Artifact, List<ArtifactVersion>> filteredUpdates = filterExcludedArtifacts.filter(updates);
 
-            Map<Artifact, ArtifactVersion> filter = versionFilter.filter(filteredUpdates);
-            for (Entry<Artifact, ArtifactVersion> entry : filter.entrySet()) {
-                ArtifactUpdate dependencyUpdate = from(entry.getKey(), entry.getValue());
+            final ListMultimap<Artifact, ArtifactVersion> filter = versionFilter.filter(filteredUpdates);
+            for (final Entry<Artifact, Collection<ArtifactVersion>> entry : filter.asMap().entrySet()) {
+                final ArtifactUpdate dependencyUpdate = from(entry.getKey(), entry.getValue());
                 if (dependencyUpdate != null) {
                     dependencyUpdates.add(dependencyUpdate);
                 }

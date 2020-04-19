@@ -13,13 +13,13 @@ public class PrintUpdates {
     private final ProjectUpdates projectUpdates;
     private final Log log;
 
-    private PrintUpdates(ProjectUpdates projectUpdates, Log log) {
+    private PrintUpdates(final ProjectUpdates projectUpdates, final Log log) {
         this.projectUpdates = projectUpdates;
         this.log = log;
     }
 
-    public static void print(ProjectUpdates projectUpdates, final Log log) {
-        PrintUpdates printUpdates = new PrintUpdates(projectUpdates, log);
+    public static void print(final ProjectUpdates projectUpdates, final Log log) {
+        final PrintUpdates printUpdates = new PrintUpdates(projectUpdates, log);
 
         printUpdates.print();
     }
@@ -32,7 +32,7 @@ public class PrintUpdates {
 
     }
 
-    private void printUpdates(String type, final DependencyUpdates updates) {
+    private void printUpdates(final String type, final DependencyUpdates updates) {
         if (!updates.getArtifacts().isEmpty()) {
             log.info("Available " + type + " updates:");
 
@@ -49,7 +49,7 @@ public class PrintUpdates {
         result.append(" ... ");
         result.append(updates.getCurrent());
         result.append(" -> ");
-        result.append(updates.getUpdates().stream().collect(joining(",")));
+        result.append(updates.getUpdates().stream().collect(joining(", ")));
         return result.toString();
     }
 
