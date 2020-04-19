@@ -37,13 +37,13 @@ public class ShowParentUpdatesMojoTest extends AbstractMojoTestCase {
         // required for mojo lookups to work
         super.setUp();
 
-        MavenSession mavenSession = mock(MavenSession.class);
+        final MavenSession mavenSession = mock(MavenSession.class);
         artifactMetadataSource = mock(ArtifactMetadataSource.class);
-        ArtifactFactory artifactFactory = mock(ArtifactFactory.class);
+        final ArtifactFactory artifactFactory = mock(ArtifactFactory.class);
         remoteArtifactRepositories = mock(List.class);
         localRepository = mock(ArtifactRepository.class);
         project = mock(MavenProject.class);
-        Build build = mock(Build.class);
+        final Build build = mock(Build.class);
         when(build.getDirectory()).thenReturn(getBasedir() + "/target");
         when(project.getBuild()).thenReturn(build);
 
@@ -125,6 +125,26 @@ public class ShowParentUpdatesMojoTest extends AbstractMojoTestCase {
 
         verify(log).info("Available parent updates:");
         verify(log).info("  parent-groupId:parent-artifactId ... 1.1.1 -> 1.2.0");
+        verifyNoMoreInteractions(log);
+    }
+
+    @Test
+    public void testPatchUpdates() throws Exception {
+        final Artifact artifact = aParent().version("1.1.1").build();
+        when(project.getParentArtifact()).thenReturn(artifact);
+        final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
+                .version("1.2.0")
+                .version("2.0.0")
+                .version("2.2.0").build();
+        mockUpdates(artifact, updates);
+        setVariableValueToObject(mojo, "versions", "patch");
+
+        mojo.execute();
+
+        verify(log).info("Available parent updates:");
+        verify(log).info("  parent-groupId:parent-artifactId ... 1.1.1 -> 1.1.3");
         verifyNoMoreInteractions(log);
     }
 

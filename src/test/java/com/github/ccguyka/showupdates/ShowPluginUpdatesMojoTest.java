@@ -41,13 +41,13 @@ public class ShowPluginUpdatesMojoTest extends AbstractMojoTestCase {
         // required for mojo lookups to work
         super.setUp();
 
-        MavenSession mavenSession = mock(MavenSession.class);
+        final MavenSession mavenSession = mock(MavenSession.class);
         artifactMetadataSource = mock(ArtifactMetadataSource.class);
-        ArtifactFactory artifactFactory = mock(ArtifactFactory.class);
+        final ArtifactFactory artifactFactory = mock(ArtifactFactory.class);
         remoteArtifactRepositories = mock(List.class);
         localRepository = mock(ArtifactRepository.class);
         project = mock(MavenProject.class);
-        Build build = mock(Build.class);
+        final Build build = mock(Build.class);
         when(build.getDirectory()).thenReturn(getBasedir() + "/target");
         when(project.getBuild()).thenReturn(build);
         when(project.getFile()).thenReturn(new File(getBasedir() + "/src/test/resources/test-mojo-pom.xml"));
@@ -67,7 +67,7 @@ public class ShowPluginUpdatesMojoTest extends AbstractMojoTestCase {
     @Test
     public void testExcludeBlacklistedUpdates() throws Exception {
         final Artifact artifact = aPlugin().version("1.1.1").build();
-        Set<Artifact> plugins = Sets.newHashSet(artifact);
+        final Set<Artifact> plugins = Sets.newHashSet(artifact);
         when(project.getPluginArtifacts()).thenReturn(plugins);
         final List<ArtifactVersion> updates = updates()
                 .version("1.2.0")
@@ -86,7 +86,7 @@ public class ShowPluginUpdatesMojoTest extends AbstractMojoTestCase {
     @Test
     public void testExcludeBlacklistedUpdatesWithParameters() throws Exception {
         final Artifact artifact = aPlugin().version("1.1.1").build();
-        Set<Artifact> plugins = Sets.newHashSet(artifact);
+        final Set<Artifact> plugins = Sets.newHashSet(artifact);
         when(project.getPluginArtifacts()).thenReturn(plugins);
         final List<ArtifactVersion> updates = updates()
                 .version("1.2.0")
@@ -104,7 +104,7 @@ public class ShowPluginUpdatesMojoTest extends AbstractMojoTestCase {
     @Test
     public void testMinorUpdates() throws Exception {
         final Artifact artifact = aPlugin().version("1.1.1").build();
-        Set<Artifact> plugins = Sets.newHashSet(artifact);
+        final Set<Artifact> plugins = Sets.newHashSet(artifact);
         when(project.getPluginArtifacts()).thenReturn(plugins);
         final List<ArtifactVersion> updates = updates()
                 .version("1.2.0")
@@ -121,10 +121,31 @@ public class ShowPluginUpdatesMojoTest extends AbstractMojoTestCase {
     }
 
     @Test
+    public void testPatchUpdates() throws Exception {
+        final Artifact artifact = aPlugin().version("1.1.1").build();
+        final Set<Artifact> plugins = Sets.newHashSet(artifact);
+        when(project.getPluginArtifacts()).thenReturn(plugins);
+        final List<ArtifactVersion> updates = updates()
+                .version("1.1.2")
+                .version("1.1.3")
+                .version("1.2.0")
+                .version("2.0.0")
+                .version("2.2.0").build();
+        mockUpdates(artifact, updates);
+        setVariableValueToObject(mojo, "versions", "patch");
+
+        mojo.execute();
+
+        verify(log).info("Available plugin updates:");
+        verify(log).info("  plugin-groupId:plugin-artifactId ... 1.1.1 -> 1.1.3");
+        verifyNoMoreInteractions(log);
+    }
+
+    @Test
     public void testTransitiveUpdates() throws Exception {
         final Artifact artifact = aPlugin().version("1.1.1").build();
         final Artifact transitiveArtifact = aPlugin().groupId("another-groupId").version("2.0.0").build();
-        Set<Artifact> plugins = Sets.newHashSet(artifact, transitiveArtifact);
+        final Set<Artifact> plugins = Sets.newHashSet(artifact, transitiveArtifact);
         when(project.getPluginArtifacts()).thenReturn(plugins);
         mockUpdates(artifact, updates()
                 .version("1.2.0")
