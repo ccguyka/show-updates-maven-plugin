@@ -76,6 +76,18 @@ public class ShowParentUpdatesMojoTest extends AbstractMojoTestCase {
     }
 
     @Test
+    public void testNoUpdates() throws Exception {
+        final Artifact artifact = aParent().version("1.2.3").build();
+        when(project.getParentArtifact()).thenReturn(artifact);
+        final List<ArtifactVersion> updates = updates().build();
+        mockUpdates(artifact, updates);
+
+        mojo.execute();
+
+        verifyNoMoreInteractions(log);
+    }
+
+    @Test
     public void testExcludeBlacklistedUpdates() throws Exception {
         final Artifact artifact = aParent().version("1.1.1").build();
         when(project.getParentArtifact()).thenReturn(artifact);

@@ -11,7 +11,7 @@ import com.github.ccguyka.showupdates.objects.ArtifactUpdate;
 class BasicUpdatesSource {
 
     protected ArtifactUpdate from(final Artifact artifact, final Collection<ArtifactVersion> artifactVersion) {
-        if (artifactVersion == null) {
+        if (artifactVersion == null || artifactVersion.isEmpty()) {
             return null;
         }
         return new ArtifactUpdate(artifact.getGroupId() + ":" + artifact.getArtifactId(), artifact.getVersion(),
