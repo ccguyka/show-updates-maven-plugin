@@ -33,8 +33,7 @@ public class SlackBodyTest {
     public void testBodyHasParentUpdates() throws Exception {
         ProjectUpdates projectUpdates = ProjectUpdates.builder()
                 .withParent(new DependencyUpdates(newArrayList(
-                        new ArtifactUpdate("dep1", "1", newArrayList("2")),
-                        new ArtifactUpdate("dep2", "2", newArrayList("11")))))
+                        new ArtifactUpdate("dep1", "1", newArrayList("2", "3")))))
                 .build();
 
         // WHEN
@@ -43,8 +42,7 @@ public class SlackBodyTest {
         // THEN
         assertThat(body)
             .contains("*Available parent updates*")
-            .contains("dep1 ... 1 -> 2")
-            .contains("dep2 ... 2 -> 11");
+            .contains("dep1 ... 1 -> 2, 3");
     }
 
     @Test
@@ -52,7 +50,7 @@ public class SlackBodyTest {
         ProjectUpdates projectUpdates = ProjectUpdates.builder()
                 .withDependency(new DependencyUpdates(newArrayList(
                         new ArtifactUpdate("dep1", "1", newArrayList("2")),
-                        new ArtifactUpdate("dep2", "2", newArrayList("11")))))
+                        new ArtifactUpdate("dep2", "2", newArrayList("11", "12")))))
                 .build();
 
         // WHEN
@@ -62,7 +60,7 @@ public class SlackBodyTest {
         assertThat(body)
             .contains("*Available dependency updates*")
             .contains("dep1 ... 1 -> 2")
-            .contains("dep2 ... 2 -> 11");
+            .contains("dep2 ... 2 -> 11, 12");
     }
 
     @Test
@@ -70,7 +68,7 @@ public class SlackBodyTest {
         ProjectUpdates projectUpdates = ProjectUpdates.builder()
                 .withPlugin(new DependencyUpdates(newArrayList(
                         new ArtifactUpdate("dep1", "1", newArrayList("2")),
-                        new ArtifactUpdate("dep2", "2", newArrayList("11")))))
+                        new ArtifactUpdate("dep2", "2", newArrayList("11", "12")))))
                 .build();
 
         // WHEN
@@ -80,7 +78,7 @@ public class SlackBodyTest {
         assertThat(body)
             .contains("*Available plugin updates*")
             .contains("dep1 ... 1 -> 2")
-            .contains("dep2 ... 2 -> 11");
+            .contains("dep2 ... 2 -> 11, 12");
     }
 
     @Test
@@ -88,7 +86,7 @@ public class SlackBodyTest {
         ProjectUpdates projectUpdates = ProjectUpdates.builder()
                 .withDependencyManagement(new DependencyUpdates(newArrayList(
                         new ArtifactUpdate("dep1", "1", newArrayList("2")),
-                        new ArtifactUpdate("dep2", "2", newArrayList("11")))))
+                        new ArtifactUpdate("dep2", "2", newArrayList("11", "12")))))
                 .build();
 
         // WHEN
@@ -98,6 +96,6 @@ public class SlackBodyTest {
         assertThat(body)
             .contains("*Available dependency management updates*")
             .contains("dep1 ... 1 -> 2")
-            .contains("dep2 ... 2 -> 11");
+            .contains("dep2 ... 2 -> 11, 12");
     }
 }

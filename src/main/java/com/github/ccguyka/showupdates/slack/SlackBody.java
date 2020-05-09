@@ -60,7 +60,7 @@ class SlackBody {
         result.append(" ... ");
         result.append(updates.getCurrent());
         result.append(" -> ");
-        result.append(updates.getUpdates().stream().collect(joining(",")));
+        result.append(updates.getUpdates().stream().collect(joining(", ")));
         result.append("\n");
         return result.toString();
     }
