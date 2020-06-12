@@ -4,7 +4,7 @@
 
     <groupId>com.github.ccguyka</groupId>
     <artifactId>show-updates-maven-plugin</artifactId>
-    <version>1.6.0</version>
+    <version>1.6.1-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
 
     <name>Show Updates Maven Plugin</name>
@@ -39,7 +39,7 @@
     <scm>
         <connection>scm:git:https://github.com/ccguyka/show-updates-maven-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/ccguyka/show-updates-maven-plugin.git</developerConnection>
-        <tag>show-updates-maven-plugin-1.6.0</tag>
+        <tag>HEAD</tag>
         <url>https://github.com/ccguyka/show-updates-maven-plugin</url>
     </scm>
 
