@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import com.github.ccguyka.showupdates.objects.ProjectUpdates;
-import com.github.seratch.jslack.Slack;
-import com.github.seratch.jslack.api.model.block.LayoutBlock;
-import com.github.seratch.jslack.api.model.block.SectionBlock;
-import com.github.seratch.jslack.api.model.block.composition.MarkdownTextObject;
-import com.github.seratch.jslack.api.webhook.Payload;
-import com.github.seratch.jslack.api.webhook.WebhookResponse;
+import com.slack.api.Slack;
+import com.slack.api.model.block.LayoutBlock;
+import com.slack.api.model.block.SectionBlock;
+import com.slack.api.model.block.composition.MarkdownTextObject;
+import com.slack.api.webhook.Payload;
+import com.slack.api.webhook.WebhookResponse;
 
 public class SlackClient {
 

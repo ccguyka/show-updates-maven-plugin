@@ -90,9 +90,9 @@
             <version>2.10.3</version>
         </dependency>
         <dependency>
-            <groupId>com.github.seratch</groupId>
-            <artifactId>jslack</artifactId>
-            <version>3.4.2</version>
+            <groupId>com.slack.api</groupId>
+            <artifactId>slack-api-client</artifactId>
+            <version>1.0.10</version>
         </dependency>
 
         <dependency>
