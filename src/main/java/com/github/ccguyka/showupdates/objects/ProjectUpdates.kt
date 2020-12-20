@@ -23,12 +23,11 @@ class ProjectUpdates private constructor(builder: Builder) {
         return Objects.hash(parent, dependency, plugin, dependencyManagement)
     }
 
-    override fun equals(`object`: Any?): Boolean {
-        if (`object` is ProjectUpdates) {
-            val that = `object`
-            return (parent == that.parent && dependency == that.dependency
-                    && plugin == that.plugin
-                    && dependencyManagement == that.dependencyManagement)
+    override fun equals(other: Any?): Boolean {
+        if (other is ProjectUpdates) {
+            return (parent == other.parent && dependency == other.dependency
+                    && plugin == other.plugin
+                    && dependencyManagement == other.dependencyManagement)
         }
         return false
     }

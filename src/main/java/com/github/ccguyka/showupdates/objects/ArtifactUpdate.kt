@@ -18,11 +18,10 @@ open class ArtifactUpdate @JsonCreator constructor(@param:JsonProperty("name") v
         return Objects.hash(name, current, updates)
     }
 
-    override fun equals(`object`: Any?): Boolean {
-        if (`object` is ArtifactUpdate) {
-            val that = `object`
-            return (name == that.name && current == that.current
-                    && updates == that.updates)
+    override fun equals(other: Any?): Boolean {
+        if (other is ArtifactUpdate) {
+            return (name == other.name && current == other.current
+                    && updates == other.updates)
         }
         return false
     }

@@ -15,9 +15,9 @@ class DependencyUpdates @JsonCreator constructor(@param:JsonProperty("artifacts"
         return Objects.hashCode(artifacts)
     }
 
-    override fun equals(`object`: Any?): Boolean {
-        if (`object` is DependencyUpdates) {
-            return artifacts == `object`.artifacts
+    override fun equals(other: Any?): Boolean {
+        if (other is DependencyUpdates) {
+            return artifacts == other.artifacts
         }
         return false
     }
