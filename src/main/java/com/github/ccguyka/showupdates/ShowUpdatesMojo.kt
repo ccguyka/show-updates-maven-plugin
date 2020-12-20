@@ -31,7 +31,7 @@ import java.io.File
  */
 @Mojo(name = "updates")
 class ShowUpdatesMojo : AbstractMojo() {
-    
+
     @Parameter(defaultValue = "\${session}", readonly = true)
     protected var mavenSession: MavenSession? = null
 
