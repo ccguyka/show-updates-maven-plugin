@@ -10,7 +10,6 @@ import org.apache.maven.artifact.metadata.ArtifactMetadataRetrievalException
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource
 import org.apache.maven.artifact.repository.ArtifactRepository
 import org.apache.maven.artifact.versioning.ArtifactVersion
-import org.apache.maven.execution.MavenSession
 import org.apache.maven.model.Build
 import org.apache.maven.model.Dependency
 import org.apache.maven.plugin.logging.Log
@@ -19,7 +18,7 @@ import org.apache.maven.project.MavenProject
 import org.junit.Test
 import org.mockito.Mockito
 import java.io.File
-import java.util.ArrayList
+import java.util.*
 
 class ShowDependencyUpdatesMojoTest : AbstractMojoTestCase() {
 
@@ -35,17 +34,15 @@ class ShowDependencyUpdatesMojoTest : AbstractMojoTestCase() {
     override fun setUp() {
         // required for mojo lookups to work
         super.setUp()
-        val mavenSession = Mockito.mock(MavenSession::class.java)
         artifactMetadataSource = Mockito.mock(ArtifactMetadataSource::class.java)
         artifactFactory = Mockito.mock(ArtifactFactory::class.java)
 
         localRepository = Mockito.mock(ArtifactRepository::class.java)
         val build = Mockito.mock(Build::class.java)
         Mockito.`when`(build.directory).thenReturn(getBasedir() + "/target")
-        Mockito.`when`(project.getBuild()).thenReturn(build)
-        Mockito.`when`(project.getFile()).thenReturn(File(getBasedir() + "/src/test/resources/test-mojo-pom.xml"))
+        Mockito.`when`(project.build).thenReturn(build)
+        Mockito.`when`(project.file).thenReturn(File(getBasedir() + "/src/test/resources/test-mojo-pom.xml"))
         mojo = lookupEmptyMojo("updates", "src/test/resources/test-mojo-pom.xml") as ShowUpdatesMojo
-        setVariableValueToObject(mojo, "mavenSession", mavenSession)
         setVariableValueToObject(mojo, "artifactMetadataSource", artifactMetadataSource)
         setVariableValueToObject(mojo, "artifactFactory", artifactFactory)
         setVariableValueToObject(mojo, "remoteArtifactRepositories", remoteArtifactRepositories)
@@ -60,7 +57,7 @@ class ShowDependencyUpdatesMojoTest : AbstractMojoTestCase() {
     fun testExcludeBlacklistedUpdates() {
         val artifact = aDependency().version("1.1.1").build()
         val dependencies: List<Dependency> = Lists.newArrayList(aDependency(artifact))
-        Mockito.`when`(project!!.dependencies).thenReturn(dependencies)
+        Mockito.`when`(project.dependencies).thenReturn(dependencies)
         val updates = updates()
                 .version("1.2.0")
                 .version("2.0.0-beta1")
@@ -78,7 +75,7 @@ class ShowDependencyUpdatesMojoTest : AbstractMojoTestCase() {
     fun testExcludeBlacklistedUpdatesWithParameters() {
         val artifact = aDependency().version("1.1.1").build()
         val dependencies: List<Dependency> = Lists.newArrayList(aDependency(artifact))
-        Mockito.`when`(project!!.dependencies).thenReturn(dependencies)
+        Mockito.`when`(project.dependencies).thenReturn(dependencies)
         val updates = updates()
                 .version("1.2.0")
                 .version("2.0.0-test").build()
@@ -95,7 +92,7 @@ class ShowDependencyUpdatesMojoTest : AbstractMojoTestCase() {
     fun testMajorUpdates() {
         val artifact = aDependency().version("1.1.1").build()
         val dependencies: List<Dependency> = Lists.newArrayList(aDependency(artifact))
-        Mockito.`when`(project!!.dependencies).thenReturn(dependencies)
+        Mockito.`when`(project.dependencies).thenReturn(dependencies)
         val updates = updates()
                 .version("1.1.2")
                 .version("1.1.3")
@@ -115,7 +112,7 @@ class ShowDependencyUpdatesMojoTest : AbstractMojoTestCase() {
     fun testMinorUpdates() {
         val artifact = aDependency().version("1.1.1").build()
         val dependencies: List<Dependency> = Lists.newArrayList(aDependency(artifact))
-        Mockito.`when`(project!!.dependencies).thenReturn(dependencies)
+        Mockito.`when`(project.dependencies).thenReturn(dependencies)
         val updates = updates()
                 .version("1.1.2")
                 .version("1.1.3")
@@ -135,7 +132,7 @@ class ShowDependencyUpdatesMojoTest : AbstractMojoTestCase() {
     fun testPatchUpdates() {
         val artifact = aDependency().version("1.1.1").build()
         val dependencies: List<Dependency> = Lists.newArrayList(aDependency(artifact))
-        Mockito.`when`(project!!.dependencies).thenReturn(dependencies)
+        Mockito.`when`(project.dependencies).thenReturn(dependencies)
         val updates = updates()
                 .version("1.1.2")
                 .version("1.1.3")
@@ -155,7 +152,7 @@ class ShowDependencyUpdatesMojoTest : AbstractMojoTestCase() {
     fun testLatestUpdates() {
         val artifact = aDependency().version("1.1.1").build()
         val dependencies: List<Dependency> = Lists.newArrayList(aDependency(artifact))
-        Mockito.`when`(project!!.dependencies).thenReturn(dependencies)
+        Mockito.`when`(project.dependencies).thenReturn(dependencies)
         val updates = updates()
                 .version("1.1.2")
                 .version("1.1.3")
@@ -176,7 +173,7 @@ class ShowDependencyUpdatesMojoTest : AbstractMojoTestCase() {
         val artifact = aDependency().version("1.1.1").build()
         val transitiveArtifact = aDependency().groupId("another-groupId").version("2.0.0").build()
         val dependencies: List<Dependency> = Lists.newArrayList(aDependency(artifact), aDependency(transitiveArtifact))
-        Mockito.`when`(project!!.dependencies).thenReturn(dependencies)
+        Mockito.`when`(project.dependencies).thenReturn(dependencies)
         mockUpdates(artifact, updates()
                 .version("1.1.2")
                 .version("1.1.3")

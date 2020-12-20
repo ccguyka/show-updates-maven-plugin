@@ -2,7 +2,6 @@ package com.github.ccguyka.showupdates.objects
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
-import com.github.ccguyka.showupdates.objects.ProjectUpdates
 import com.github.ccguyka.showupdates.objects.ProjectUpdates.Companion.builder
 import com.google.common.base.Charsets
 import com.google.common.collect.Lists

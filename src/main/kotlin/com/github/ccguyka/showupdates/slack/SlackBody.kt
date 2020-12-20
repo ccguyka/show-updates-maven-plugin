@@ -29,7 +29,7 @@ internal class SlackBody(private val artifact: String?) {
 
     private fun printUpdates(type: String, updates: DependencyUpdates): String {
         val text = StringBuilder()
-        if (!updates.artifacts.isEmpty()) {
+        if (updates.artifacts.isNotEmpty()) {
             text.append("\n")
             text.append("*Available $type updates*")
             text.append("\n")

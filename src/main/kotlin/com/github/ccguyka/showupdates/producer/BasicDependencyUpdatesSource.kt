@@ -13,7 +13,7 @@ open class BasicDependencyUpdatesSource(private val updateSource: UpdateSource, 
 
     protected fun getDependencyUpdates(dependencies: List<Dependency>): List<ArtifactUpdate> {
         val dependencyUpdates: MutableList<ArtifactUpdate> = ArrayList()
-        if (dependencies != null && !dependencies.isEmpty()) {
+        if (dependencies.isNotEmpty()) {
             val filterDependencies = dependencyFilter.filter(dependencies)
             val artifacts = artifactSource.getArtifacts(filterDependencies)
             val updates = updateSource.getUpdates(artifacts)

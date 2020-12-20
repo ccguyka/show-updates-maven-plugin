@@ -22,10 +22,10 @@ class AggregateUpdatesMojoTest : AbstractMojoTestCase() {
         super.setUp()
         val path = this.javaClass.getResource("")
         val project = Mockito.mock(MavenProject::class.java)
-        Mockito.`when`(project.isExecutionRoot()).thenReturn(true)
+        Mockito.`when`(project.isExecutionRoot).thenReturn(true)
         val build = Mockito.mock(Build::class.java)
         Mockito.`when`(build.directory).thenReturn(getBasedir() + "/target")
-        Mockito.`when`(project.getBuild()).thenReturn(build)
+        Mockito.`when`(project.build).thenReturn(build)
         val buildA = Mockito.mock(Build::class.java)
         Mockito.`when`(buildA.directory).thenReturn(path.path + "/projectA")
         val projectA = Mockito.mock(MavenProject::class.java)
@@ -49,6 +49,6 @@ class AggregateUpdatesMojoTest : AbstractMojoTestCase() {
         mojo!!.execute()
         val result = File(getBasedir() + "/target/aggregated-maven-updates.json")
         val expected = File(this.javaClass.getResource("aggregated-maven-updates.json").path)
-        Assertions.assertThat(result).hasSameContentAs(expected)
+        Assertions.assertThat(result).hasSameTextualContentAs(expected)
     }
 }

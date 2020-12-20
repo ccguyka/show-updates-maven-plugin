@@ -16,7 +16,7 @@ class PluginUpdatesSource(private val project: MavenProject, private val updateS
         get() {
             val artifacts = project.pluginArtifacts
             val dependencyUpdates: MutableList<ArtifactUpdate> = ArrayList()
-            if (artifacts != null && !artifacts.isEmpty()) {
+            if (artifacts != null && artifacts.isNotEmpty()) {
                 val filterArtifacts = pluginFilter.filter(artifacts)
                 val updates = updateSource.getUpdates(filterArtifacts)
                 val filteredUpdates = filterExcludedArtifacts.filter(updates)

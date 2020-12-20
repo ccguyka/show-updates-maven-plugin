@@ -8,14 +8,13 @@ import org.apache.maven.artifact.metadata.ArtifactMetadataRetrievalException
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource
 import org.apache.maven.artifact.repository.ArtifactRepository
 import org.apache.maven.artifact.versioning.ArtifactVersion
-import org.apache.maven.execution.MavenSession
 import org.apache.maven.model.Build
 import org.apache.maven.plugin.logging.Log
 import org.apache.maven.plugin.testing.AbstractMojoTestCase
 import org.apache.maven.project.MavenProject
 import org.junit.Test
 import org.mockito.Mockito
-import java.util.ArrayList
+import java.util.*
 
 class ShowParentUpdatesMojoTest : AbstractMojoTestCase() {
 
@@ -30,15 +29,13 @@ class ShowParentUpdatesMojoTest : AbstractMojoTestCase() {
     override fun setUp() {
         // required for mojo lookups to work
         super.setUp()
-        val mavenSession = Mockito.mock(MavenSession::class.java)
         artifactMetadataSource = Mockito.mock(ArtifactMetadataSource::class.java)
         val artifactFactory = Mockito.mock(ArtifactFactory::class.java)
         localRepository = Mockito.mock(ArtifactRepository::class.java)
         val build = Mockito.mock(Build::class.java)
         Mockito.`when`(build.directory).thenReturn(getBasedir() + "/target")
-        Mockito.`when`(project.getBuild()).thenReturn(build)
+        Mockito.`when`(project.build).thenReturn(build)
         mojo = lookupEmptyMojo("updates", "src/test/resources/test-mojo-pom.xml") as ShowUpdatesMojo
-        setVariableValueToObject(mojo, "mavenSession", mavenSession)
         setVariableValueToObject(mojo, "artifactMetadataSource", artifactMetadataSource)
         setVariableValueToObject(mojo, "artifactFactory", artifactFactory)
         setVariableValueToObject(mojo, "remoteArtifactRepositories", remoteArtifactRepositories)
@@ -52,7 +49,7 @@ class ShowParentUpdatesMojoTest : AbstractMojoTestCase() {
     @Throws(Exception::class)
     fun testParentUpdates() {
         val artifact = aParent().version("1.2.3").build()
-        Mockito.`when`(project!!.parentArtifact).thenReturn(artifact)
+        Mockito.`when`(project.parentArtifact).thenReturn(artifact)
         val updates = updates()
                 .version("1.2.4")
                 .version("2.1.3").build()
@@ -67,7 +64,7 @@ class ShowParentUpdatesMojoTest : AbstractMojoTestCase() {
     @Throws(Exception::class)
     fun testNoUpdates() {
         val artifact = aParent().version("1.2.3").build()
-        Mockito.`when`(project!!.parentArtifact).thenReturn(artifact)
+        Mockito.`when`(project.parentArtifact).thenReturn(artifact)
         val updates = updates().build()
         mockUpdates(artifact, updates)
         mojo!!.execute()
@@ -78,7 +75,7 @@ class ShowParentUpdatesMojoTest : AbstractMojoTestCase() {
     @Throws(Exception::class)
     fun testExcludeBlacklistedUpdates() {
         val artifact = aParent().version("1.1.1").build()
-        Mockito.`when`(project!!.parentArtifact).thenReturn(artifact)
+        Mockito.`when`(project.parentArtifact).thenReturn(artifact)
         val updates = updates()
                 .version("1.2.0")
                 .version("2.0.0-beta1")
@@ -95,7 +92,7 @@ class ShowParentUpdatesMojoTest : AbstractMojoTestCase() {
     @Throws(Exception::class)
     fun testExcludeBlacklistedUpdatesWithParameters() {
         val artifact = aParent().version("1.1.1").build()
-        Mockito.`when`(project!!.parentArtifact).thenReturn(artifact)
+        Mockito.`when`(project.parentArtifact).thenReturn(artifact)
         val updates = updates()
                 .version("1.2.0")
                 .version("2.0.0-test").build()
@@ -111,7 +108,7 @@ class ShowParentUpdatesMojoTest : AbstractMojoTestCase() {
     @Throws(Exception::class)
     fun testMajorUpdates() {
         val artifact = aParent().version("1.1.1").build()
-        Mockito.`when`(project!!.parentArtifact).thenReturn(artifact)
+        Mockito.`when`(project.parentArtifact).thenReturn(artifact)
         val updates = updates()
                 .version("1.1.2")
                 .version("1.1.3")
@@ -130,7 +127,7 @@ class ShowParentUpdatesMojoTest : AbstractMojoTestCase() {
     @Throws(Exception::class)
     fun testMinorUpdates() {
         val artifact = aParent().version("1.1.1").build()
-        Mockito.`when`(project!!.parentArtifact).thenReturn(artifact)
+        Mockito.`when`(project.parentArtifact).thenReturn(artifact)
         val updates = updates()
                 .version("1.1.2")
                 .version("1.1.3")
@@ -149,7 +146,7 @@ class ShowParentUpdatesMojoTest : AbstractMojoTestCase() {
     @Throws(Exception::class)
     fun testPatchUpdates() {
         val artifact = aParent().version("1.1.1").build()
-        Mockito.`when`(project!!.parentArtifact).thenReturn(artifact)
+        Mockito.`when`(project.parentArtifact).thenReturn(artifact)
         val updates = updates()
                 .version("1.1.2")
                 .version("1.1.3")
@@ -168,7 +165,7 @@ class ShowParentUpdatesMojoTest : AbstractMojoTestCase() {
     @Throws(Exception::class)
     fun testLatestUpdates() {
         val artifact = aParent().version("1.1.1").build()
-        Mockito.`when`(project!!.parentArtifact).thenReturn(artifact)
+        Mockito.`when`(project.parentArtifact).thenReturn(artifact)
         val updates = updates()
                 .version("1.1.2")
                 .version("1.1.3")

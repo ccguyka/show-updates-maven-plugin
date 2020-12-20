@@ -9,7 +9,6 @@ import com.slack.api.model.block.composition.MarkdownTextObject
 import com.slack.api.webhook.Payload
 import com.slack.api.webhook.WebhookResponse
 import java.io.IOException
-import java.util.*
 
 class SlackClient(private val artifact: String?) {
 
@@ -37,7 +36,7 @@ class SlackClient(private val artifact: String?) {
                         .build())
                 .build()
         val payload = Payload.builder()
-                .blocks(Arrays.asList(block))
+                .blocks(listOf(block))
                 .build()
         val slack = Slack.getInstance()
         return Response.response(slack.send(token, payload))

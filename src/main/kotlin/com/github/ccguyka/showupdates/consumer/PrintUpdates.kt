@@ -16,7 +16,7 @@ class PrintUpdates private constructor(private val projectUpdates: ProjectUpdate
     }
 
     private fun printUpdates(type: String, updates: DependencyUpdates) {
-        if (!updates.artifacts.isEmpty()) {
+        if (updates.artifacts.isNotEmpty()) {
             log.info("Available $type updates:")
             for (dependencyUpdate in updates.artifacts) {
                 log.info(getLineText(dependencyUpdate))

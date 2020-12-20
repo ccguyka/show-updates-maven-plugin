@@ -18,13 +18,7 @@ import java.io.IOException
 class SendSlackMessageMojo : AbstractMojo() {
 
     @Parameter(defaultValue = "\${project}")
-    protected var project: MavenProject? = null
-
-    /**
-     * The projects in the reactor for aggregation report.
-     */
-    @Parameter(defaultValue = "\${reactorProjects}", readonly = true)
-    private val reactorProjects: List<MavenProject>? = null
+    private var project: MavenProject? = null
 
     @Parameter(property = "token")
     private val token: String? = null
@@ -74,7 +68,7 @@ class SendSlackMessageMojo : AbstractMojo() {
     }
 
     private val updatesFile: File
-        private get() {
+        get() {
             val aggregatedFile = aggregationFile
             if (aggregatedFile.exists()) {
                 return aggregatedFile
@@ -83,8 +77,8 @@ class SendSlackMessageMojo : AbstractMojo() {
             return File("$buildDir/maven-updates.json")
         }
 
-    protected val aggregationFile: File
-        protected get() {
+    private val aggregationFile: File
+        get() {
             val buildDir = project!!.build.directory
             return File("$buildDir/aggregated-maven-updates.json")
         }

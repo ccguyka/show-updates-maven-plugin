@@ -19,7 +19,7 @@ class VersionFilter private constructor(val filter: List<VersionMatcher>) {
                 val latestUpdates = value.stream()
                         .filter { updateVersion: ArtifactVersion -> versionFilter.matches(currentVersion, updateVersion) }
                         .collect(Collectors.toList())
-                if (!latestUpdates.isEmpty()) {
+                if (latestUpdates.isNotEmpty()) {
                     latestVersions.put(key, Iterables.getLast(latestUpdates))
                 }
             }

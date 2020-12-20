@@ -17,7 +17,7 @@ import java.util.stream.Collectors
 class AggregateUpdatesMojo : AbstractMojo() {
 
     @Parameter(defaultValue = "\${project}")
-    protected var project: MavenProject? = null
+    private var project: MavenProject? = null
 
     /**
      * The projects in the reactor for aggregation report.
@@ -35,13 +35,13 @@ class AggregateUpdatesMojo : AbstractMojo() {
         }
     }
 
-    protected fun getReportFile(project: MavenProject): File {
+    private fun getReportFile(project: MavenProject): File {
         val buildDir = project.build.directory
         return File("$buildDir/maven-updates.json")
     }
 
-    protected val aggregationReportDirectory: File
-        protected get() {
+    private val aggregationReportDirectory: File
+        get() {
             val buildDir = project!!.build.directory
             return File("$buildDir/aggregated-maven-updates.json")
         }

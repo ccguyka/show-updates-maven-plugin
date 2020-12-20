@@ -23,8 +23,8 @@ class SendSlackMessageMojoTest : AbstractMojoTestCase() {
     override fun setUp() {
         // required for mojo lookups to work
         super.setUp()
-        Mockito.`when`(project.isExecutionRoot()).thenReturn(true)
-        Mockito.`when`(project.getArtifactId()).thenReturn("my-artifact")
+        Mockito.`when`(project.isExecutionRoot).thenReturn(true)
+        Mockito.`when`(project.artifactId).thenReturn("my-artifact")
         useUpdateFolder("updates")
         mojo = lookupEmptyMojo("send-slack-message", "src/test/resources/test-mojo-pom.xml") as SendSlackMessageMojo
         setVariableValueToObject(mojo, "project", project)
@@ -45,7 +45,7 @@ class SendSlackMessageMojoTest : AbstractMojoTestCase() {
     @Throws(Exception::class)
     fun testNoMessageSendIfNotInRootModule() {
         // GIVEN
-        Mockito.`when`(project!!.isExecutionRoot).thenReturn(false)
+        Mockito.`when`(project.isExecutionRoot).thenReturn(false)
 
         // WHEN
         mojo!!.execute()
@@ -138,6 +138,6 @@ class SendSlackMessageMojoTest : AbstractMojoTestCase() {
         val path = this.javaClass.getResource("")
         val build = Mockito.mock(Build::class.java)
         Mockito.`when`(build.directory).thenReturn(path.path + "/slack/" + folder)
-        Mockito.`when`(project!!.build).thenReturn(build)
+        Mockito.`when`(project.build).thenReturn(build)
     }
 }

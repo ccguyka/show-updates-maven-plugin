@@ -18,7 +18,6 @@ import com.github.ccguyka.showupdates.producer.UpdateSource
 import org.apache.maven.artifact.factory.ArtifactFactory
 import org.apache.maven.artifact.metadata.ArtifactMetadataSource
 import org.apache.maven.artifact.repository.ArtifactRepository
-import org.apache.maven.execution.MavenSession
 import org.apache.maven.plugin.AbstractMojo
 import org.apache.maven.plugins.annotations.Component
 import org.apache.maven.plugins.annotations.Mojo
@@ -32,23 +31,20 @@ import java.io.File
 @Mojo(name = "updates")
 class ShowUpdatesMojo : AbstractMojo() {
 
-    @Parameter(defaultValue = "\${session}", readonly = true)
-    protected var mavenSession: MavenSession? = null
+    @Component
+    private var artifactMetadataSource: ArtifactMetadataSource? = null
 
     @Component
-    protected var artifactMetadataSource: ArtifactMetadataSource? = null
-
-    @Component
-    protected var artifactFactory: ArtifactFactory? = null
+    private var artifactFactory: ArtifactFactory? = null
 
     @Parameter(defaultValue = "\${project.remoteArtifactRepositories}", readonly = true)
-    protected var remoteArtifactRepositories: List<ArtifactRepository>? = null
+    private var remoteArtifactRepositories: List<ArtifactRepository>? = null
 
     @Parameter(defaultValue = "\${localRepository}", readonly = true)
-    protected var localRepository: ArtifactRepository? = null
+    private var localRepository: ArtifactRepository? = null
 
     @Parameter(defaultValue = "\${project}")
-    protected var project: MavenProject? = null
+    private var project: MavenProject? = null
 
     @Parameter(property = "excludes", defaultValue = "alpha,beta,SNAPSHOT")
     private val excludes = arrayOf("alpha", "beta", "SNAPSHOT")
@@ -62,7 +58,7 @@ class ShowUpdatesMojo : AbstractMojo() {
     }
 
     private val projectUpdates: ProjectUpdates
-        private get() {
+        get() {
             val updateSource = UpdateSource(artifactMetadataSource!!, localRepository!!, remoteArtifactRepositories!!, log)
             val artifactSource = ArtifactSource(artifactFactory!!)
             val filterExcludedArtifacts = FilterExcludedArtifacts(*excludes)
@@ -78,7 +74,7 @@ class ShowUpdatesMojo : AbstractMojo() {
             return getProjectUpdates.projectUpdates
         }
 
-    protected fun getReportsFile(project: MavenProject?): File {
+    private fun getReportsFile(project: MavenProject?): File {
         val buildDir = project!!.build.directory
         return File("$buildDir/maven-updates.json")
     }
