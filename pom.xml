@@ -62,7 +62,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <kotlin.version>1.4.21-2</kotlin.version>
+        <kotlin.version>1.4.30</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <maven.version>3.6.3</maven.version>
         <maven-plugin-annotations.version>3.6.0</maven-plugin-annotations.version>
