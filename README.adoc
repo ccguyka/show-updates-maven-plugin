@@ -1,4 +1,4 @@
-image:https://img.shields.io/travis/ccguyka/show-updates-maven-plugin/master[Travis,link=https://travis-ci.org/ccguyka/show-updates-maven-plugin]
+image:https://img.shields.io/travis/com/ccguyka/show-updates-maven-plugin/master[Travis,link=https://app.travis-ci.com/github/ccguyka/show-updates-maven-plugin]
 image:https://sonarcloud.io/api/project_badges/measure?project=ccguyka_show-updates-maven-plugin&metric=alert_status[Sonar Quality Gate,link=https://sonarcloud.io/dashboard?id=ccguyka_show-updates-maven-plugin]
 image:https://sonarcloud.io/api/project_badges/measure?project=ccguyka_show-updates-maven-plugin&metric=coverage[Sonar Coverage,link=https://sonarcloud.io/dashboard?id=ccguyka_show-updates-maven-plugin]
 image:https://img.shields.io/github/last-commit/ccguyka/show-updates-maven-plugin[GitHub last commit,link=https://github.com/ccguyka/show-updates-maven-plugin/commits/master]
