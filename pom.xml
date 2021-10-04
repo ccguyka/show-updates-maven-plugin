@@ -64,7 +64,7 @@
 
         <kotlin.version>1.5.30</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
-        <maven.version>3.8.1</maven.version>
+        <maven.version>3.8.3</maven.version>
         <maven-plugin-annotations.version>3.6.1</maven-plugin-annotations.version>
         <maven.javadoc.skip>true</maven.javadoc.skip>
         <junit.version>4.13.2</junit.version>
